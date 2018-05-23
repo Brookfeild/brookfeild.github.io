@@ -10,7 +10,7 @@ function draw() {
   fill(0)
   textSize(25)
   fill(0)
-  text("Click Reload for a new Number",25,66)
+  text("Click Roll Dice for a new Number",25,66)
   if (valx === 1) {
     fill(0)
     ellipse(200,200,75,75);
