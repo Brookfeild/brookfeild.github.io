@@ -7,5 +7,5 @@ function draw() {
   rotateX(frameCount = -mouseY * 0.02);
   rotateY(frameCount = mouseX * 0.01);
   fill("blue");
-  cone(100,100,24,16);
+  sphere(100);
 }
