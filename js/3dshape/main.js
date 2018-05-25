@@ -1,5 +1,5 @@
 function setup() {
-  createCanvas(800, 800,WEBGL);
+  createCanvas(400, 400,WEBGL);
 }
 
 function draw() {
@@ -7,5 +7,5 @@ function draw() {
   rotateX(frameCount = -mouseY * 0.02);
   rotateY(frameCount = mouseX * 0.01);
   fill("blue");
-  cone(250,250,24,16);
+  cone(100,100,24,16);
 }
