@@ -5,7 +5,7 @@ function setup() {
 function draw() {
   background(220);
   rotateX(frameCount = -mouseY * 0.02);
-  rotateY(frameCount = mouseX * 0.01);
+  rotateY(frameCount = mouseZ * 0.01);
   fill("blue");
   sphere(100);
 }
