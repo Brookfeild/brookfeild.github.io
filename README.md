@@ -1,3 +1,3 @@
 # brookfeild.github.io
 
-Don't worry I dont know what I am doing
+This is just a website that I will be using to learn HTML and JS
