@@ -25,15 +25,25 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .section {
+            margin-bottom: 20px;
+        }
         h2 {
             color: #333;
+        }
+        .store-info {
+            display: flex;
+            justify-content: space-between;
+        }
+        .store-info div {
+            flex-basis: 30%;
         }
         .picture-boxes {
             display: flex;
             justify-content: space-between;
         }
         .picture-box {
-            flex-basis: 48%;
+            flex-basis: 30%;
             padding: 10px;
             background-color: #eaeaea;
             text-align: center;
@@ -49,23 +59,46 @@
 <body>
 
 <header>
-    <h1>Where are you skiing today?</h1>
+    <h1>Welcome to My Store</h1>
 </header>
 
 <div class="container">
 
-    <div class="picture-boxes">
+    <div class="section store-info">
+        <div>
+            <h2>Store Hours</h2>
+            <p>Store Closed for the season, check back in the fall!</p>
+            <p>Regular Season Hours: 8:00 AM - 6:00 PM</p>
+        </div>
+        <div>
+            <h2>Store Location</h2>
+            <p>238 Route 100, West Dover, Vermont, 05356</p>
+        </div>
+        <div>
+            <h2>Contact Us</h2>
+            <p>Phone: (802) 464-2002</p>
+            <p>Email: info@mystore.com</p>
+        </div>
+    </div>
+
+    <div class="section picture-boxes">
         <div class="picture-box">
-            <a href="https://brookfeild.github.io/SportsOdyssey/MountSnow">
-                <img src="https://via.placeholder.com/300" alt="Product 1">
+            <a href="brookfeild.github.io/SportsOdyssey/Rentals">
+                <img src="https://via.placeholder.com/300" alt="Rentals">
             </a>
-            <p>Product 1</p>
+            <p>Rentals</p>
         </div>
         <div class="picture-box">
-            <a href="https://www.example.com/product2">
-                <img src="https://via.placeholder.com/300" alt="Product 2">
+            <a href="brookfeild.github.io/SportsOdyssey/Service">
+                <img src="https://via.placeholder.com/300" alt="Service">
             </a>
-            <p>Product 2</p>
+            <p>Ski and Board Services</p>
+        </div>
+        <div class="picture-box">
+            <a href="brookfeild.github.io/SportsOdyssey/Retail">
+                <img src="https://via.placeholder.com/300" alt="Retail">
+            </a>
+            <p>Retail</p>
         </div>
     </div>
 
