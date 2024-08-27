@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Storefront</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        .store-info {
+            display: flex;
+            justify-content: space-between;
+        }
+        .store-info div {
+            flex-basis: 30%;
+        }
+        .picture-boxes {
+            display: flex;
+            justify-content: space-between;
+        }
+        .picture-box {
+            flex-basis: 30%;
+            padding: 10px;
+            background-color: #eaeaea;
+            text-align: center;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .picture-box img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to My Store</h1>
+</header>
+
+<div class="container">
+
+    <div class="section store-info">
+        <div>
+            <h2>Store Hours</h2>
+            <p>Monday - Friday: 9:00 AM - 8:00 PM</p>
+            <p>Saturday: 10:00 AM - 6:00 PM</p>
+            <p>Sunday: Closed</p>
+        </div>
+        <div>
+            <h2>Store Locations</h2>
+            <p>123 Main Street, City, Country</p>
+            <p>456 Another St, City, Country</p>
+        </div>
+        <div>
+            <h2>Contact Us</h2>
+            <p>Phone: (123) 456-7890</p>
+            <p>Email: info@mystore.com</p>
+        </div>
+    </div>
+
+    <div class="section picture-boxes">
+        <div class="picture-box">
+            <a href="https://www.example.com/product1">
+                <img src="https://via.placeholder.com/300" alt="Product 1">
+            </a>
+            <p>Product 1</p>
+        </div>
+        <div class="picture-box">
+            <a href="https://www.example.com/product2">
+                <img src="https://via.placeholder.com/300" alt="Product 2">
+            </a>
+            <p>Product 2</p>
+        </div>
+        <div class="picture-box">
+            <a href="https://www.example.com/product3">
+                <img src="https://via.placeholder.com/300" alt="Product 3">
+            </a>
+            <p>Product 3</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
