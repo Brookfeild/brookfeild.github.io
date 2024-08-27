@@ -6,54 +6,87 @@
     <title>Sports Odyssey</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #AF3030;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        .store-info {
-            display: flex;
-            justify-content: space-between;
-        }
-        .store-info div {
-            flex-basis: 30%;
-        }
-        .picture-boxes {
-            display: flex;
-            justify-content: space-between;
-        }
-        .picture-box {
-            flex-basis: 30%;
-            padding: 10px;
-            background-color: #eaeaea;
-            text-align: center;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        .picture-box img {
-            max-width: 100%;
-            height: auto;
-        }
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #AF3030;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+.store-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.store-info div {
+    width: 100%;
+}
+
+.picture-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.picture-box {
+    width: 100%;
+    padding: 10px;
+    background-color: #eaeaea;
+    text-align: center;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.picture-box img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (min-width: 600px) {
+    .store-info {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .store-info div {
+        flex-basis: 30%;
+    }
+
+    .picture-boxes {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .picture-box {
+        flex-basis: 30%;
+    }
+}
+
     </style>
 </head>
 <body>
