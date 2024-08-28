@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Odyssey Mount Snow - Retail</title>
+    <title>Sports Odyssey Mount Snow - Rentals</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,9 +13,16 @@
         }
         header {
             background-color: #AF3030;
-            color: white;
             padding: 20px 0;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
         }
         .container {
             width: 80%;
@@ -25,14 +32,57 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            margin: 0;
-        }
         h2 {
             color: #333;
         }
         .main-content {
             margin-bottom: 20px;
+        }
+        .picture-boxes {
+            display: flex;
+            justify-content: space-between;
+        }
+        .picture-box {
+            flex-basis: 48%;
+            padding: 10px;
+            background-color: #eaeaea;
+            text-align: center;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        .picture-box a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .picture-box img {
+            max-width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .picture-box img:not(:first-child) {
+            opacity: 0;
+        }
+        .picture-box:hover {
+            transform: scale(1.25);
+        }
+        .picture-box:hover img {
+            animation: slideShow 6s infinite;
+        }
+        @keyframes slideShow {
+            0% { opacity: 1; }
+            33% { opacity: 0; }
+            33.1% { opacity: 1; }
+            66% { opacity: 0; }
+            66.1% { opacity: 1; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -40,7 +90,7 @@
 
 <header>
     <h1>
-        <a href="https://brookfeild.github.io/SportsOdyssey/index.html">Sports Odyssey Mount Snow</a>
+        <a href="https://brookfeild.github.io/SportsOdyssey/index.html">Sports Odyssey Mount Snow - Rentals</a>
     </h1>
 </header>
 
@@ -54,6 +104,25 @@
     <div class="main-content">
         <h2>Additional Information</h2>
         <p>This section can be used for any other relevant information, such as rental policies, safety guidelines, or other services you offer. Keep your customers informed with all the details they need for a great experience.</p>
+    </div>
+
+    <div class="picture-boxes">
+        <div class="picture-box">
+            <a href="NordicaEnforcer/index.html">
+                <img src="Demos/Enforcer-89-2025.png" alt="Enforcer 89">
+                <img src="Demos/Enforcer-94-2025.png" alt="Enforcer 94">
+                <img src="Demos/Enforcer-99-2025.png" alt="Enforcer 99">
+                <img src="Demos/Enforcer-104-2025.png" alt="Enforcer 104">
+            </a>
+        </div>
+        <div class="picture-box">
+            <a href="NordicaSantaAna/index.html">
+                <img src="Demos/SantaAna-87-2025.png" alt="Santa Ana 87">
+                <img src="Demos/SantaAna-92-2025.png" alt="Santa Ana 92">
+                <img src="Demos/SantaAna-97-2025.png" alt="Santa Ana 97">
+                <img src="Demos/SantaAna-102-2025.png" alt="Santa Ana 102">
+            </a>
+        </div>
     </div>
 
 </div>
