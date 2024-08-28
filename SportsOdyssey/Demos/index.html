@@ -58,10 +58,12 @@
             height: 100%;
         }
         .picture-box img {
-            display: block;
             max-width: 100%;
+            max-height: 200px;
+            width: auto;
             height: auto;
             transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+            object-fit: contain;
         }
         .picture-box img:not(:first-child) {
             display: none;
