@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Odyssey Mount Snow - Rentals</title>
+    <title>Sports Odyssey Mount Snow - Demos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,40 +49,33 @@
             text-align: center;
             border: 1px solid #ddd;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
             transition: transform 0.3s ease-in-out;
+            overflow: hidden;
         }
         .picture-box a {
             display: block;
             width: 100%;
             height: 100%;
-            position: relative;
         }
         .picture-box img {
+            display: block;
             max-width: 100%;
             height: auto;
-            position: absolute;
-            top: 0;
-            left: 0;
             transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
         }
         .picture-box img:not(:first-child) {
-            opacity: 0;
+            display: none;
         }
         .picture-box:hover {
-            transform: scale(1.25);
+            transform: scale(1.05);
         }
         .picture-box:hover img {
             animation: slideShow 6s infinite;
         }
         @keyframes slideShow {
-            0% { opacity: 1; }
-            33% { opacity: 0; }
-            33.1% { opacity: 1; }
-            66% { opacity: 0; }
-            66.1% { opacity: 1; }
-            100% { opacity: 1; }
+            0%, 33% { display: block; opacity: 1; }
+            33.1%, 66% { display: none; opacity: 0; }
+            66.1%, 100% { display: block; opacity: 1; }
         }
     </style>
 </head>
