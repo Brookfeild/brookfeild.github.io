@@ -66,27 +66,32 @@
             rentalBox.innerHTML = `
                 <select class="package-type">
                     <option value="" disabled selected>Select Package Type</option>
-                    <option value="basic">Basic Package</option>
-                    <option value="standard">Standard Package</option>
-                    <option value="premium">Premium Package</option>
-                    <option value="family">Family Package</option>
-                    <option value="group">Group Package</option>
+                    <option value="basic">Basic Adult Rental - $40</option>
+                    <option value="standard">High Performance Adult</option>
+                    <option value="premium">Basic Children Rental - $30</option>
+                    <option value="family">High Performance Children</option>
+                    <option value="group">Helmet - $10</option>
                 </select>
 
                 <div class="package-details hidden">
-                    <input type="text" placeholder="Enter Name">
+                    <input type="text" placeholder="Enter First Name">
+                    <input type="text" placeholder="Enter Last Name">
+                    <input type="text" placeholder="Enter Street Number">
+                    <input type="text" placeholder="Enter City">
+                    <input type="text" placeholder="Enter Zip Code">
+                    <input type="text" placeholder="Enter Height">
+                    <input type="text" placeholder="Enter Weight">
                     <input type="text" placeholder="Enter Age">
-                    <input type="text" placeholder="Enter Skill Level">
                     
                     <select>
-                        <option value="" disabled selected>Select Ski Type</option>
-                        <option value="alpine">Alpine Skis</option>
-                        <option value="cross-country">Cross-Country Skis</option>
-                        <option value="freestyle">Freestyle Skis</option>
+                        <option value="" disabled selected>Select Skier Ability</option>
+                        <option value="alpine">Type 1 (Beginner)</option>
+                        <option value="cross-country">Type 2 (Intermediate)</option>
+                        <option value="freestyle">Type 3 (Expert)</option>
                     </select>
                     
                     <label>
-                        <input type="checkbox"> Insurance
+                        <input type="checkbox"> Insurance +$1
                     </label>
 
                     <button class="save-rental-btn">Save Rental</button>
