@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ski Rental Packages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #add-rental-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .rental-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .hidden {
+            display: none;
+        }
+        .rental-box select, 
+        .rental-box input[type="text"] {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .rental-box input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .save-rental-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Select Your Ski Rental Packages</h1>
+
+    <div id="add-rental-btn">Add Rental</div>
+
+    <div id="rental-overview">
+        <!-- Rental boxes will be added here -->
+    </div>
+
+    <script>
+        document.getElementById('add-rental-btn').addEventListener('click', function() {
+            const rentalBox = document.createElement('div');
+            rentalBox.className = 'rental-box';
+
+            rentalBox.innerHTML = `
+                <select class="package-type">
+                    <option value="" disabled selected>Select Package Type</option>
+                    <option value="basic">Basic Package</option>
+                    <option value="standard">Standard Package</option>
+                    <option value="premium">Premium Package</option>
+                    <option value="family">Family Package</option>
+                    <option value="group">Group Package</option>
+                </select>
+
+                <div class="package-details hidden">
+                    <input type="text" placeholder="Enter Name">
+                    <input type="text" placeholder="Enter Age">
+                    <input type="text" placeholder="Enter Skill Level">
+                    
+                    <select>
+                        <option value="" disabled selected>Select Ski Type</option>
+                        <option value="alpine">Alpine Skis</option>
+                        <option value="cross-country">Cross-Country Skis</option>
+                        <option value="freestyle">Freestyle Skis</option>
+                    </select>
+                    
+                    <label>
+                        <input type="checkbox"> Insurance
+                    </label>
+
+                    <button class="save-rental-btn">Save Rental</button>
+                </div>
+            `;
+
+            document.getElementById('rental-overview').insertBefore(rentalBox, document.getElementById('rental-overview').firstChild);
+
+            rentalBox.querySelector('.package-type').addEventListener('change', function() {
+                const packageDetails = rentalBox.querySelector('.package-details');
+                if (this.value) {
+                    packageDetails.classList.remove('hidden');
+                } else {
+                    packageDetails.classList.add('hidden');
+                }
+            });
+
+            rentalBox.querySelector('.save-rental-btn').addEventListener('click', function() {
+                alert('Rental saved successfully!');
+                rentalBox.classList.add('saved');
+                rentalBox.querySelector('.package-type').disabled = true;
+                rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
+                    element.disabled = true;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
