@@ -4,15 +4,320 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ski Rental Packages</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #add-rental-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .rental-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .hidden {
+            display: none;
+        }
+        .package-type-row, .half-width-row, .third-width-row, .quarter-width-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .rental-box select, 
+        .rental-box input[type="text"] {
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .half-width {
+            width: 48%;
+        }
+        .third-width {
+            width: 31%;
+        }
+        .quarter-width {
+            width: 23%;
+        }
+        .age-box {
+            width: 20%;
+        }
+        .insurance-label {
+            display: flex;
+            align-items: center;
+        }
+        .save-rental-btn, .delete-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        #total-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .toggle-arrow, .delete-btn {
+            position:absolute;
+            font-size: 18px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: red;
+            font-weight: bold;
+        }
+        .toggle-arrow {
+            top: 20px;
+            right: 40px;
+        }
+        .delete-btn {
+            right: 20px;
+        }
+        .collapsed-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Select Your Ski Rental Packages</h1>
+
     <div id="add-rental-btn">Add Rental</div>
+
     <div id="rental-overview">
         <!-- Rental boxes will be added here -->
     </div>
+
     <div id="total-price">Total Price: $0</div>
-    <script src="scripts.js"></script>
+
+    <script>
+        let totalPrice = 0;
+
+        function updateTotalPrice(amount) {
+            totalPrice += amount;
+            document.getElementById('total-price').textContent = `Total Price: $${totalPrice}`;
+        }
+
+        function validateInput(input, type) {
+            switch (type) {
+                case 'name':
+                    return /^[A-Za-z ]{2,}$/.test(input);
+                case 'zip':
+                    return /^[0-9]{5}$/.test(input);
+                case 'age':
+                    return /^[1-9][0-9]?$/.test(input);
+                default:
+                    return false;
+            }
+        }
+
+        function deleteRental(rentalBox, rentalPrice) {
+            rentalBox.remove();
+            updateTotalPrice(-rentalPrice);
+        }
+
+        document.getElementById('add-rental-btn').addEventListener('click', function() {
+            const rentalBox = document.createElement('div');
+            rentalBox.className = 'rental-box';
+
+            rentalBox.innerHTML = `
+                <div class="package-type-row">
+                    <select class="package-type half-width">
+                        <option value="" disabled selected>Select Package Type</option>
+                        <option value="40" data-submenu="none">Basic Adult Rental - $40</option>
+                        <option value="50" data-submenu="high-performance-adult">High Performance Adult - $50</option>
+                        <option value="30" data-submenu="none">Basic Children Rental - $30</option>
+                        <option value="40" data-submenu="high-performance-children">High Performance Children - $40</option>
+                        <option value="10" data-submenu="none">Helmet - $10</option>
+                    </select>
+                    <div class="toggle-arrow">V</div>
+                    <button class="delete-btn">X</button>
+                </div>
+
+                <div class="package-details hidden">
+                    <div class="half-width-row">
+                        <input type="text" placeholder="Enter First Name" class="half-width" required>
+                        <input type="text" placeholder="Enter Last Name" class="half-width" required>
+                    </div>
+
+                    <div class="third-width-row">
+                        <input type="text" placeholder="Enter Street Number" class="third-width">
+                        <input type="text" placeholder="Enter City" class="third-width" required>
+                        <input type="text" placeholder="Enter Zip Code" class="third-width" required>
+                    </div>
+
+                    <div class="quarter-width-row">
+                        <select class="quarter-width">
+                            <option value="">Select Feet</option>
+                            ${Array.from(Array(8).keys()).slice(1).map(n => `<option value="${n}">${n}</option>`).join('')}
+                        </select>
+                        <select class="quarter-width">
+                            <option value="">Select Inches</option>
+                            ${Array.from(Array(12).keys()).map(n => `<option value="${n}">${n}</option>`).join('')}
+                        </select>
+                        <label class="insurance-label">
+                            <input type="checkbox"> And a half
+                        </label>
+                        <select class="quarter-width">
+                            <option value="">Select Weight Unit</option>
+                            <option value="lb">Lb.</option>
+                            <option value="kg">Kg.</option>
+                        </select>
+                    </div>
+
+                    <div class="quarter-width-row">
+                        <input type="text" placeholder="Enter Age" class="age-box" required>
+                        <select class="quarter-width">
+                            <option value="" disabled selected>Select Skier Ability</option>
+                            <option value="alpine">Type 1 (Beginner)</option>
+                            <option value="cross-country">Type 2 (Intermediate)</option>
+                            <option value="freestyle">Type 3 (Expert)</option>
+                        </select>
+                    </div>
+
+                    <div class="high-performance-options hidden">
+                        <select class="half-width">
+                            <option value="" disabled selected>Select Additional Option</option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+                    </div>
+
+                    <label class="insurance-label">
+                        <input type="checkbox" class="insurance-checkbox"> Insurance +$1
+                    </label>
+
+                    <div class="error-message"></div>
+
+                    <button class="save-rental-btn">Save Rental</button>
+                </div>
+            `;
+
+            document.getElementById('rental-overview').insertBefore(rentalBox, document.getElementById('rental-overview').firstChild);
+
+            const packageTypeSelect = rentalBox.querySelector('.package-type');
+            const packageDetails = rentalBox.querySelector('.package-details');
+            const highPerformanceOptions = rentalBox.querySelector('.high-performance-options');
+            const toggleArrow = rentalBox.querySelector('.toggle-arrow');
+            const deleteBtn = rentalBox.querySelector('.delete-btn');
+            let rentalPrice = 0;
+
+            packageTypeSelect.addEventListener('change', function() {
+                const selectedOption = packageTypeSelect.options[packageTypeSelect.selectedIndex];
+                const submenu = selectedOption.getAttribute('data-submenu');
+                packageDetails.classList.remove('hidden');
+
+                if (submenu === 'high-performance-adult' || submenu === 'high-performance-children') {
+                    highPerformanceOptions.classList.remove('hidden');
+                } else {
+                    highPerformanceOptions.classList.add('hidden');
+                }
+                rentalPrice = parseInt(packageTypeSelect.value);
+            });
+
+            deleteBtn.addEventListener('click', function() {
+                deleteRental(rentalBox, rentalPrice);
+            });
+
+            rentalBox.querySelector('.save-rental-btn').addEventListener('click', function(event) {
+                event.preventDefault();
+                const inputs = Array.from(rentalBox.querySelectorAll('input, select:not(.package-type)'));
+                const inputValues = inputs.map(input => ({
+                    type: input.type === 'checkbox' ? 'checkbox' : 'value',
+                    value: input.type === 'checkbox' ? input.checked : input.value
+                }));
+
+                const firstName = rentalBox.querySelector('input[placeholder="Enter First Name"]');
+                const lastName = rentalBox.querySelector('input[placeholder="Enter Last Name"]');
+                const city = rentalBox.querySelector('input[placeholder="Enter City"]');
+                const zipCode = rentalBox.querySelector('input[placeholder="Enter Zip Code"]');
+                const age = rentalBox.querySelector('input[placeholder="Enter Age"]');
+                const errorMessage = rentalBox.querySelector('.error-message');
+
+                errorMessage.textContent = ''; // Clear previous errors
+
+                if (!validateInput(firstName.value, 'name') || !validateInput(lastName.value, 'name') || !validateInput(city.value, 'name') || !validateInput(zipCode.value, 'zip') || !validateInput(age.value, 'age')) {
+                    errorMessage.textContent = 'Please correct the errors in your input.';
+                    return;
+                }
+
+                if (rentalBox.querySelector('.insurance-checkbox').checked) {
+                    rentalPrice += 1;
+                }
+
+                updateTotalPrice(rentalPrice);
+                alert('Rental saved successfully!');
+
+                rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
+                    element.disabled = true;
+                });
+
+                const selectedPackageText = packageTypeSelect.options[packageTypeSelect.selectedIndex].textContent;
+
+                rentalBox.innerHTML = `
+                    <div class="collapsed-box">
+                        <div>${selectedPackageText}</div>
+                        <div class="toggle-arrow">></div>
+                        <button class="delete-btn">X</button>
+                    </div>
+                `;
+
+                const collapsedBox = rentalBox.querySelector('.collapsed-box');
+
+                collapsedBox.querySelector('.toggle-arrow').addEventListener('click', function() {
+                    rentalBox.innerHTML = '';
+                    rentalBox.appendChild(packageTypeSelect.parentNode);
+                    rentalBox.appendChild(packageDetails);
+                    inputs.forEach((input, index) => {
+                        if (inputValues[index].type === 'checkbox') {
+                            input.checked = inputValues[index].value;
+                        } else {
+                            input.value = inputValues[index].value;
+                        }
+                    });
+                    packageDetails.classList.remove('hidden');
+                    toggleArrow.textContent = 'V';
+                    packageTypeSelect.disabled = false;
+                    rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
+                        element.disabled = false;
+                    });
+                    deleteBtn.addEventListener('click', function() {
+                        deleteRental(rentalBox, rentalPrice);
+                    });
+                });
+
+                rentalBox.querySelector('.delete-btn').addEventListener('click', function() {
+                    deleteRental(rentalBox, rentalPrice);
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
