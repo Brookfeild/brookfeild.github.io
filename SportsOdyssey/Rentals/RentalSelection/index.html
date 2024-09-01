@@ -46,6 +46,11 @@
             cursor: pointer;
             border-radius: 5px;
         }
+        #total-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +63,16 @@
         <!-- Rental boxes will be added here -->
     </div>
 
+    <div id="total-price">Total Price: $0</div>
+
     <script>
+        let totalPrice = 0;
+
+        function updateTotalPrice(amount) {
+            totalPrice += amount;
+            document.getElementById('total-price').textContent = `Total Price: $${totalPrice}`;
+        }
+
         document.getElementById('add-rental-btn').addEventListener('click', function() {
             const rentalBox = document.createElement('div');
             rentalBox.className = 'rental-box';
@@ -66,11 +80,11 @@
             rentalBox.innerHTML = `
                 <select class="package-type">
                     <option value="" disabled selected>Select Package Type</option>
-                    <option value="basic">Basic Adult Rental - $40</option>
-                    <option value="standard">High Performance Adult - $0</option>
-                    <option value="premium">Basic Children Rental - $30</option>
-                    <option value="family">High Performance Children - $0</option>
-                    <option value="group">Helmet - $10</option>
+                    <option value="40">Basic Adult Rental - $40</option>
+                    <option value="0">High Performance Adult - $0</option>
+                    <option value="30">Basic Children Rental - $30</option>
+                    <option value="0">High Performance Children - $0</option>
+                    <option value="10">Helmet - $10</option>
                 </select>
 
                 <div class="package-details hidden">
@@ -91,7 +105,7 @@
                     </select>
                     
                     <label>
-                        <input type="checkbox"> Insurance +$1
+                        <input type="checkbox" class="insurance-checkbox"> Insurance +$1
                     </label>
 
                     <button class="save-rental-btn">Save Rental</button>
@@ -102,19 +116,28 @@
 
             rentalBox.querySelector('.package-type').addEventListener('change', function() {
                 const packageDetails = rentalBox.querySelector('.package-details');
+                const packagePrice = parseInt(this.value);
                 if (this.value) {
                     packageDetails.classList.remove('hidden');
                 } else {
                     packageDetails.classList.add('hidden');
                 }
-            });
 
-            rentalBox.querySelector('.save-rental-btn').addEventListener('click', function() {
-                alert('Rental saved successfully!');
-                rentalBox.classList.add('saved');
-                rentalBox.querySelector('.package-type').disabled = true;
-                rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
-                    element.disabled = true;
+                rentalBox.querySelector('.save-rental-btn').addEventListener('click', function() {
+                    let rentalPrice = packagePrice;
+
+                    if (rentalBox.querySelector('.insurance-checkbox').checked) {
+                        rentalPrice += 1;
+                    }
+
+                    updateTotalPrice(rentalPrice);
+
+                    alert('Rental saved successfully!');
+                    rentalBox.classList.add('saved');
+                    rentalBox.querySelector('.package-type').disabled = true;
+                    rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
+                        element.disabled = true;
+                    });
                 });
             });
         });
