@@ -72,9 +72,20 @@
         .toggle-arrow {
             position: absolute;
             top: 20px;
+            right: 40px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 20px;
             right: 20px;
             font-size: 18px;
             cursor: pointer;
+            color: red;
+            font-weight: bold;
+            background: none;
+            border: none;
         }
         .collapsed-box {
             display: flex;
@@ -107,6 +118,11 @@
             document.getElementById('total-price').textContent = `Total Price: $${totalPrice}`;
         }
 
+        function deleteRental(rentalBox, rentalPrice) {
+            rentalBox.remove();
+            updateTotalPrice(-rentalPrice);
+        }
+
         document.getElementById('add-rental-btn').addEventListener('click', function() {
             const rentalBox = document.createElement('div');
             rentalBox.className = 'rental-box';
@@ -122,6 +138,7 @@
                         <option value="10" data-submenu="none">Helmet - $10</option>
                     </select>
                     <div class="toggle-arrow">V</div>
+                    <button class="delete-btn">X</button>
                 </div>
 
                 <div class="package-details hidden">
@@ -171,6 +188,8 @@
             const packageDetails = rentalBox.querySelector('.package-details');
             const highPerformanceOptions = rentalBox.querySelector('.high-performance-options');
             const toggleArrow = rentalBox.querySelector('.toggle-arrow');
+            const deleteBtn = rentalBox.querySelector('.delete-btn');
+            let rentalPrice = 0;
 
             packageTypeSelect.addEventListener('change', function() {
                 const selectedOption = packageTypeSelect.options[packageTypeSelect.selectedIndex];
@@ -183,12 +202,15 @@
                 } else {
                     highPerformanceOptions.classList.add('hidden');
                 }
+
+                rentalPrice = parseInt(packageTypeSelect.value);
+            });
+
+            deleteBtn.addEventListener('click', function() {
+                deleteRental(rentalBox, rentalPrice);
             });
 
             rentalBox.querySelector('.save-rental-btn').addEventListener('click', function() {
-                const packagePrice = parseInt(packageTypeSelect.value);
-                let rentalPrice = packagePrice;
-
                 if (rentalBox.querySelector('.insurance-checkbox').checked) {
                     rentalPrice += 1;
                 }
@@ -207,6 +229,7 @@
                     <div class="collapsed-box">
                         <div>${selectedPackageText}</div>
                         <div class="toggle-arrow">></div>
+                        <button class="delete-btn">X</button>
                     </div>
                 `;
 
@@ -220,6 +243,13 @@
                     rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
                         element.disabled = false;
                     });
+                    deleteBtn.addEventListener('click', function() {
+                        deleteRental(rentalBox, rentalPrice);
+                    });
+                });
+
+                rentalBox.querySelector('.delete-btn').addEventListener('click', function() {
+                    deleteRental(rentalBox, rentalPrice);
                 });
             });
         });
