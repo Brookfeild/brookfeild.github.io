@@ -136,7 +136,7 @@
     <div id="total-price">Total Price: $0</div>
 
     <script>
-        let totalPrice = 0;
+        /* let totalPrice = 0;
 
         function updateTotalPrice(amount) {
             totalPrice += amount;
@@ -151,7 +151,25 @@
         function validateInput(input, regex) {
             return regex.test(input);
         }
+        */
 
+        document.addEventListener('DOMContentLoaded', function () {
+    let totalPrice = 0;
+
+    function updateTotalPrice(amount) {
+        totalPrice += amount;
+        document.getElementById('total-price').textContent = `Total Price: $${totalPrice}`;
+    }
+
+    function deleteRental(rentalBox, rentalPrice) {
+        rentalBox.remove();
+        updateTotalPrice(-rentalPrice);
+    }
+
+    function validateInput(input, regex) {
+        return regex.test(input);
+    }
+    
         document.getElementById('add-rental-btn').addEventListener('click', function () {
             const rentalBox = document.createElement('div');
             rentalBox.className = 'rental-box';
@@ -234,7 +252,7 @@
                     <button class="save-rental-btn">Save Rental</button>
                     <div class="error-msg"></div>
                 </div>
-            `;
+            `});
 
             document.getElementById('rental-overview').insertBefore(rentalBox, document.getElementById('rental-overview').firstChild);
 
