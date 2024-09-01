@@ -142,7 +142,7 @@
                     <select class="package-type half-width">
                         <option value="" disabled selected>Select Package Type</option>
                         <option value="40" data-submenu="none">Basic Adult Rental - $40</option>
-                        <option value="50" data-submenu="high-performance-adult">High Performance Adult - $50</option>
+                        <option value="50" data-submenu="high-performance-adults">High Performance Adult - $50</option>
                         <option value="30" data-submenu="none">Basic Children Rental - $30</option>
                         <option value="40" data-submenu="high-performance-children">High Performance Children - $40</option>
                         <option value="10" data-submenu="none">Helmet - $10</option>
@@ -178,7 +178,7 @@
                         <input type="text" placeholder="Enter Weight" class="small-box">
                         <select class="small-box">
                             <option value="Lb">Lb.</option>
-                            <option value="Kg">Kg.</option>
+                            <option value="Kg">Kg.</option
                         </select>
                         <input type="text" placeholder="Enter Age" class="small-box" required>
                         <select class="quarter-width">
@@ -189,12 +189,21 @@
                         </select>
                     </div>
 
-                    <div class="high-performance-options hidden">
-                        <select class="half-width">
+                    <div class="high-performance-children hidden">
+                        <select class="half-width" onchange="updateOptionPrice(this, 40)">
                             <option value="" disabled selected>Select Additional Option</option>
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                            <option value="40">Option 1</option>
+                            <option value="40">Option 2</option>
+                            <option value="40">Option 3</option>
+                        </select>
+                    </div>
+
+                    <div class="high-performance-adults hidden">
+                        <select class="half-width" onchange="updateOptionPrice(this, 50)">
+                            <option value="" disabled selected>Select Additional Option</option>
+                            <option value="50">Option 1</option>
+                            <option value="70">Option 2</option>
+                            <option value="80">Option 3</option>
                         </select>
                     </div>
 
@@ -211,7 +220,8 @@
 
             const packageTypeSelect = rentalBox.querySelector('.package-type');
             const packageDetails = rentalBox.querySelector('.package-details');
-            const highPerformanceOptions = rentalBox.querySelector('.high-performance-options');
+            const highPerformanceChildren = rentalBox.querySelector('.high-performance-children');
+            const highPerformanceAdults = rentalBox.querySelector('.high-performance-adults');
             const toggleArrow = rentalBox.querySelector('.toggle-arrow');
             const deleteBtn = rentalBox.querySelector('.delete-btn');
             const errorMessage = rentalBox.querySelector('.error-msg');
@@ -223,13 +233,17 @@
 
                 packageDetails.classList.remove('hidden');
 
-                if (submenu.includes('high-performance')) {
-                    highPerformanceOptions.classList.remove('hidden');
-                } else {
-                    highPerformanceOptions.classList.add('hidden');
+                highPerformanceChildren.classList.add('hidden');
+                highPerformanceAdults.classList.add('hidden');
+
+                if (submenu === 'high-performance-children') {
+                    highPerformanceChildren.classList.remove('hidden');
+                } else if (submenu === 'high-performance-adults') {
+                    highPerformanceAdults.classList.remove('hidden');
                 }
 
-                rentalPrice = parseInt(packageTypeSelect.value);
+                rentalPrice = parseInt(selectedOption.value);
+                updateTotalPrice(rentalPrice);
             });
 
             deleteBtn.addEventListener('click', function() {
@@ -274,8 +288,8 @@
                     <div class="collapsed-box">
                         <div>${selectedPackageText}</div>
                         <div class="toggle-arrow">></div>
-                        <button class="delete-btn">X</button
- </div>
+                        <button class="delete-btn">X</button>
+                    </div>
                 `;
 
                 rentalBox.querySelector('.toggle-arrow').addEventListener('click', function() {
@@ -298,6 +312,11 @@
                 });
             });
         });
+
+        function updateOptionPrice(select, basePrice) {
+            const selectedValue = parseInt(select.value);
+            updateTotalPrice(selectedValue - basePrice); // Adjust for the base price already added
+        }
     </script>
 
 </body>
