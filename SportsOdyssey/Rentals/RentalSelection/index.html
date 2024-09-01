@@ -49,12 +49,13 @@
         .quarter-width {
             width: 23%;
         }
-        .age-box {
-            width: 20%;
+        .small-box {
+            width: 10%;
         }
-        .insurance-label {
+        .insurance-label, .unit-label {
             display: flex;
             align-items: center;
+            margin-top: 10px;
         }
         .save-rental-btn {
             background-color: #28a745;
@@ -96,6 +97,11 @@
             background-color: #f0f0f0;
             border-radius: 5px;
         }
+        .error-msg {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -123,6 +129,10 @@
             updateTotalPrice(-rentalPrice);
         }
 
+        function validateInput(input, regex) {
+            return regex.test(input);
+        }
+
         document.getElementById('add-rental-btn').addEventListener('click', function() {
             const rentalBox = document.createElement('div');
             rentalBox.className = 'rental-box';
@@ -132,9 +142,9 @@
                     <select class="package-type half-width">
                         <option value="" disabled selected>Select Package Type</option>
                         <option value="40" data-submenu="none">Basic Adult Rental - $40</option>
-                        <option value="0" data-submenu="high-performance-adult">High Performance Adult - $0</option>
+                        <option value="50" data-submenu="high-performance-adult">High Performance Adult - $50</option>
                         <option value="30" data-submenu="none">Basic Children Rental - $30</option>
-                        <option value="0" data-submenu="high-performance-children">High Performance Children - $0</option>
+                        <option value="40" data-submenu="high-performance-children">High Performance Children - $40</option>
                         <option value="10" data-submenu="none">Helmet - $10</option>
                     </select>
                     <div class="toggle-arrow">V</div>
@@ -143,20 +153,34 @@
 
                 <div class="package-details hidden">
                     <div class="half-width-row">
-                        <input type="text" placeholder="Enter First Name" class="half-width">
-                        <input type="text" placeholder="Enter Last Name" class="half-width">
+                        <input type="text" placeholder="Enter First Name" class="half-width" required>
+                        <input type="text" placeholder="Enter Last Name" class="half-width" required>
                     </div>
 
                     <div class="third-width-row">
                         <input type="text" placeholder="Enter Street Number" class="third-width">
-                        <input type="text" placeholder="Enter City" class="third-width">
-                        <input type="text" placeholder="Enter Zip Code" class="third-width">
+                        <input type="text" placeholder="Enter City" class="third-width" required>
+                        <input type="text" placeholder="Enter Zip Code" class="third-width" required>
                     </div>
 
                     <div class="quarter-width-row">
-                        <input type="text" placeholder="Enter Height" class="quarter-width">
-                        <input type="text" placeholder="Enter Weight" class="quarter-width">
-                        <input type="text" placeholder="Enter Age" class="age-box">
+                        <select class="small-box">
+                            <option value="" disabled selected>ft</option>
+                            ${Array.from({ length: 8 }, (_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
+                        </select>
+                        <select class="small-box">
+                            <option value="" disabled selected>in</option>
+                            ${Array.from({ length: 12 }, (_, i) => `<option value="${i}">${i}</option>`).join('')}
+                        </select>
+                        <label class="insurance-label">
+                            <input type="checkbox" class="half-inch"> and a half
+                        </label>
+                        <input type="text" placeholder="Enter Weight" class="small-box">
+                        <select class="small-box">
+                            <option value="Lb">Lb.</option>
+                            <option value="Kg">Kg.</option>
+                        </select>
+                        <input type="text" placeholder="Enter Age" class="small-box" required>
                         <select class="quarter-width">
                             <option value="" disabled selected>Select Skier Ability</option>
                             <option value="alpine">Type 1 (Beginner)</option>
@@ -179,6 +203,7 @@
                     </label>
 
                     <button class="save-rental-btn">Save Rental</button>
+                    <div class="error-msg"></div>
                 </div>
             `;
 
@@ -189,6 +214,7 @@
             const highPerformanceOptions = rentalBox.querySelector('.high-performance-options');
             const toggleArrow = rentalBox.querySelector('.toggle-arrow');
             const deleteBtn = rentalBox.querySelector('.delete-btn');
+            const errorMessage = rentalBox.querySelector('.error-msg');
             let rentalPrice = 0;
 
             packageTypeSelect.addEventListener('change', function() {
@@ -197,7 +223,7 @@
 
                 packageDetails.classList.remove('hidden');
 
-                if (submenu === 'high-performance-adult' || submenu === 'high-performance-children') {
+                if (submenu.includes('high-performance')) {
                     highPerformanceOptions.classList.remove('hidden');
                 } else {
                     highPerformanceOptions.classList.add('hidden');
@@ -211,6 +237,25 @@
             });
 
             rentalBox.querySelector('.save-rental-btn').addEventListener('click', function() {
+                const firstName = rentalBox.querySelector('input[placeholder="Enter First Name"]');
+                const lastName = rentalBox.querySelector('input[placeholder="Enter Last Name"]');
+                const city = rentalBox.querySelector('input[placeholder="Enter City"]');
+                const zipCode = rentalBox.querySelector('input[placeholder="Enter Zip Code"]');
+                const age = rentalBox.querySelector('input[placeholder="Enter Age"]');
+
+                // Basic validation
+                if (!validateInput(firstName.value, /^[A-Za-z]{2,}$/) ||
+                    !validateInput(lastName.value, /^[A-Za-z]{2,}$/) ||
+                    !validateInput(city.value, /^[A-Za-z]{2,}$/) ||
+                    !validateInput(zipCode.value, /^\d{5}$/) ||
+                    !validateInput(age.value, /^(?:[1-9][0-9]?|99)$/)) {
+                    errorMessage.textContent = 'Please check your inputs. Ensure names and city contain only letters (2+ characters), zip code is 5 digits, and age is between 1 and 99.';
+                    errorMessage.style.display = 'block';
+                    return;
+                } else {
+                    errorMessage.style.display = 'none';
+                }
+
                 if (rentalBox.querySelector('.insurance-checkbox').checked) {
                     rentalPrice += 1;
                 }
@@ -229,8 +274,8 @@
                     <div class="collapsed-box">
                         <div>${selectedPackageText}</div>
                         <div class="toggle-arrow">></div>
-                        <button class="delete-btn">X</button>
-                    </div>
+                        <button class="delete-btn">X</button
+ </div>
                 `;
 
                 rentalBox.querySelector('.toggle-arrow').addEventListener('click', function() {
