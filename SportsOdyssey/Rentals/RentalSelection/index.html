@@ -24,19 +24,37 @@
             margin-bottom: 20px;
             border-radius: 5px;
             background-color: #f9f9f9;
+            position: relative;
         }
         .hidden {
             display: none;
+        }
+        .package-type-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .rental-box select, 
         .rental-box input[type="text"] {
             margin-bottom: 10px;
             padding: 8px;
-            width: 100%;
             box-sizing: border-box;
         }
-        .rental-box input[type="checkbox"] {
-            margin-right: 5px;
+        .half-width {
+            width: 48%;
+        }
+        .third-width {
+            width: 31%;
+        }
+        .quarter-width {
+            width: 23%;
+        }
+        .age-box {
+            width: 20%;
+        }
+        .insurance-label {
+            display: flex;
+            align-items: center;
         }
         .save-rental-btn {
             background-color: #28a745;
@@ -50,6 +68,22 @@
             font-size: 20px;
             font-weight: bold;
             margin-top: 20px;
+        }
+        .toggle-arrow {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .collapsed-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -78,30 +112,52 @@
             rentalBox.className = 'rental-box';
 
             rentalBox.innerHTML = `
-                <select class="package-type">
-                    <option value="" disabled selected>Select Package Type</option>
-                    <option value="40">Basic Adult Rental - $40</option>
-                    <option value="0">High Performance Adult - $0</option>
-                    <option value="30">Basic Children Rental - $30</option>
-                    <option value="0">High Performance Children - $0</option>
-                    <option value="10">Helmet - $10</option>
-                </select>
+                <div class="package-type-row">
+                    <select class="package-type half-width">
+                        <option value="" disabled selected>Select Package Type</option>
+                        <option value="40" data-submenu="none">Basic Adult Rental - $40</option>
+                        <option value="0" data-submenu="high-performance-adult">High Performance Adult - $0</option>
+                        <option value="30" data-submenu="none">Basic Children Rental - $30</option>
+                        <option value="0" data-submenu="high-performance-children">High Performance Children - $0</option>
+                        <option value="10" data-submenu="none">Helmet - $10</option>
+                    </select>
+                    <div class="toggle-arrow">V</div>
+                </div>
 
                 <div class="package-details hidden">
-                    <input type="text" placeholder="Enter First Name"><input type="text" placeholder="Enter Last Name">
-                    <input type="text" placeholder="Enter Street Number"><input type="text" placeholder="Enter City"><input type="text" placeholder="Enter Zip Code">
-                    <input type="text" placeholder="Enter Height">
-                    <input type="text" placeholder="Enter Weight">
-                    <input type="text" placeholder="Enter Age">
-                    
-                    <select>
-                        <option value="" disabled selected>Select Skier Ability</option>
-                        <option value="alpine">Type 1 (Beginner)</option>
-                        <option value="cross-country">Type 2 (Intermediate)</option>
-                        <option value="freestyle">Type 3 (Expert)</option>
-                    </select>
-                    
-                    <label>
+                    <div class="half-width-row">
+                        <input type="text" placeholder="Enter First Name" class="half-width">
+                        <input type="text" placeholder="Enter Last Name" class="half-width">
+                    </div>
+
+                    <div class="third-width-row">
+                        <input type="text" placeholder="Enter Street Number" class="third-width">
+                        <input type="text" placeholder="Enter City" class="third-width">
+                        <input type="text" placeholder="Enter Zip Code" class="third-width">
+                    </div>
+
+                    <div class="quarter-width-row">
+                        <input type="text" placeholder="Enter Height" class="quarter-width">
+                        <input type="text" placeholder="Enter Weight" class="quarter-width">
+                        <input type="text" placeholder="Enter Age" class="age-box">
+                        <select class="quarter-width">
+                            <option value="" disabled selected>Select Skier Ability</option>
+                            <option value="alpine">Type 1 (Beginner)</option>
+                            <option value="cross-country">Type 2 (Intermediate)</option>
+                            <option value="freestyle">Type 3 (Expert)</option>
+                        </select>
+                    </div>
+
+                    <div class="high-performance-options hidden">
+                        <select class="half-width">
+                            <option value="" disabled selected>Select Additional Option</option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+                    </div>
+
+                    <label class="insurance-label">
                         <input type="checkbox" class="insurance-checkbox"> Insurance +$1
                     </label>
 
@@ -111,29 +167,58 @@
 
             document.getElementById('rental-overview').insertBefore(rentalBox, document.getElementById('rental-overview').firstChild);
 
-            rentalBox.querySelector('.package-type').addEventListener('change', function() {
-                const packageDetails = rentalBox.querySelector('.package-details');
-                const packagePrice = parseInt(this.value);
-                if (this.value) {
-                    packageDetails.classList.remove('hidden');
+            const packageTypeSelect = rentalBox.querySelector('.package-type');
+            const packageDetails = rentalBox.querySelector('.package-details');
+            const highPerformanceOptions = rentalBox.querySelector('.high-performance-options');
+            const toggleArrow = rentalBox.querySelector('.toggle-arrow');
+
+            packageTypeSelect.addEventListener('change', function() {
+                const selectedOption = packageTypeSelect.options[packageTypeSelect.selectedIndex];
+                const submenu = selectedOption.getAttribute('data-submenu');
+
+                packageDetails.classList.remove('hidden');
+
+                if (submenu === 'high-performance-adult' || submenu === 'high-performance-children') {
+                    highPerformanceOptions.classList.remove('hidden');
                 } else {
-                    packageDetails.classList.add('hidden');
+                    highPerformanceOptions.classList.add('hidden');
+                }
+            });
+
+            rentalBox.querySelector('.save-rental-btn').addEventListener('click', function() {
+                const packagePrice = parseInt(packageTypeSelect.value);
+                let rentalPrice = packagePrice;
+
+                if (rentalBox.querySelector('.insurance-checkbox').checked) {
+                    rentalPrice += 1;
                 }
 
-                rentalBox.querySelector('.save-rental-btn').addEventListener('click', function() {
-                    let rentalPrice = packagePrice;
+                updateTotalPrice(rentalPrice);
 
-                    if (rentalBox.querySelector('.insurance-checkbox').checked) {
-                        rentalPrice += 1;
-                    }
+                alert('Rental saved successfully!');
 
-                    updateTotalPrice(rentalPrice);
+                rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
+                    element.disabled = true;
+                });
 
-                    alert('Rental saved successfully!');
-                    rentalBox.classList.add('saved');
-                    rentalBox.querySelector('.package-type').disabled = true;
+                const selectedPackageText = packageTypeSelect.options[packageTypeSelect.selectedIndex].textContent;
+
+                rentalBox.innerHTML = `
+                    <div class="collapsed-box">
+                        <div>${selectedPackageText}</div>
+                        <div class="toggle-arrow">></div>
+                    </div>
+                `;
+
+                rentalBox.querySelector('.toggle-arrow').addEventListener('click', function() {
+                    rentalBox.innerHTML = '';
+                    rentalBox.appendChild(packageTypeSelect.parentNode);
+                    rentalBox.appendChild(packageDetails);
+                    packageDetails.classList.add('hidden');
+                    toggleArrow.textContent = 'V';
+                    packageTypeSelect.disabled = false;
                     rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
-                        element.disabled = true;
+                        element.disabled = false;
                     });
                 });
             });
