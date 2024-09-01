@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Odyssey Mount Snow - Retail</title>
+    <title>Sports Odyssey Mount Snow</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,6 +41,13 @@
         .main-content {
             margin-bottom: 20px;
         }
+        .paypal-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -54,15 +61,28 @@
 <div class="container">
 
     <div class="main-content">
-        <h2>Main Section</h2>
-        <p>This is where you can include the main content about your rentals. You can provide information on the types of equipment available, rental pricing, and any special offers. Be sure to make this section informative and appealing to your customers!</p>
+        <h2>PayPal Demo</h2>
+    <!--    <p>This is where you can include the main content about your rentals. You can provide information on the types of equipment available, rental pricing, and any special offers. Be sure to make this section informative and appealing to your customers!</p> -->
     </div>
 
-    <div class="main-content">
+    <!-- <div class="main-content">
         <h2>Additional Information</h2>
         <p>This section can be used for any other relevant information, such as rental policies, safety guidelines, or other services you offer. Keep your customers informed with all the details they need for a great experience.</p>
-    </div>
+    </div> -->
 
+</div>
+
+<div class="paypal-section">
+    <h2>Support Us</h2>
+    <p>If you found our services helpful, feel free to support us with a small donation. Thank you!</p>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="your_paypal_email@example.com">
+        <input type="hidden" name="item_name" value="Support Donation">
+        <input type="hidden" name="amount" value="0.01">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="Donate with PayPal">
+    </form>
 </div>
 
 </body>
