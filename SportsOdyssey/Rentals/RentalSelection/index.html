@@ -35,21 +35,19 @@
             align-items: center;
         }
         .rental-box select, 
-        .rental-box input[type="text"] {
+        .rental-box input[type="text"], 
+        .rental-box input[type="checkbox"] {
             margin-bottom: 10px;
             padding: 8px;
             box-sizing: border-box;
         }
-        .half-width {
+        .half-width, .quarter-width {
             width: 48%;
         }
         .third-width {
             width: 31%;
         }
-        .quarter-width {
-            width: 23%;
-        }
-        .age-box {
+        .age-box, .weight-box {
             width: 20%;
         }
         .insurance-label {
@@ -67,13 +65,21 @@
         .delete-btn {
             background-color: #dc3545;
         }
-        #total-price {
+        #total-price, #rental-list {
             font-size: 20px;
             font-weight: bold;
             margin-top: 20px;
         }
+        #rental-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #rental-list ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
         .toggle-arrow, .delete-btn {
-            position:absolute;
+            position: absolute;
             font-size: 18px;
             cursor: pointer;
             background: none;
@@ -114,13 +120,29 @@
     </div>
 
     <div id="total-price">Total Price: $0</div>
+    <div id="rental-list">
+        <h2>Rental List</h2>
+        <ul>
+            <!-- Rentals will be listed here -->
+        </ul>
+    </div>
 
     <script>
         let totalPrice = 0;
+        let head = null; // Linked list head
+        const rentalList = document.querySelector("#rental-list ul");
 
         function updateTotalPrice(amount) {
             totalPrice += amount;
             document.getElementById('total-price').textContent = `Total Price: $${totalPrice}`;
+        }
+
+        function addRentalToList(packageText, dataId) {
+            const li = document.createElement("li");
+            li.textContent = packageText;
+            li.dataset.id = dataId; // Store ID for reference
+            rentalList.appendChild(li);
+            return li;
         }
 
         function validateInput(input, type) {
@@ -136,14 +158,28 @@
             }
         }
 
-        function deleteRental(rentalBox, rentalPrice) {
-            rentalBox.remove();
-            updateTotalPrice(-rentalPrice);
+        function deleteRental(rentalNode) {
+            if (rentalNode === head) {
+                head = rentalNode.next;
+            } else {
+                let current = head;
+                while (current && current.next !== rentalNode) {
+                    current = current.next;
+                }
+                if (current) {
+                    current.next = rentalNode.next;
+                }
+            }
+            document.querySelector(`li[data-id="${rentalNode.dataId}"]`).remove();
+            rentalNode.box.remove();
+            updateTotalPrice(-rentalNode.rentalPrice);
         }
 
         document.getElementById('add-rental-btn').addEventListener('click', function() {
             const rentalBox = document.createElement('div');
             rentalBox.className = 'rental-box';
+            const dataId = Date.now(); // Unique ID for tracking
+            rentalBox.dataset.id = dataId;
 
             rentalBox.innerHTML = `
                 <div class="package-type-row">
@@ -183,16 +219,16 @@
                         <label class="insurance-label">
                             <input type="checkbox"> And a half
                         </label>
-                        <select class="quarter-width">
-                            <option value="">Select Weight Unit</option>
-                            <option value="lb">Lb.</option>
-                            <option value="kg">Kg.</option>
-                        </select>
                     </div>
 
                     <div class="quarter-width-row">
                         <input type="text" placeholder="Enter Age" class="age-box" required>
-                        <select class="quarter-width">
+                        <input type="text" placeholder="Enter Weight" class="weight-box" required>
+                        <select class="quarter-width" placeholder="Select Weight Unit">
+                            <option value="lb">Lb.</option>
+                            <option value="kg">Kg.</option>
+                        </select>
+                        <select class="quarter-width" placeholder="Select Skier Ability">
                             <option value="" disabled selected>Select Skier Ability</option>
                             <option value="alpine">Type 1 (Beginner)</option>
                             <option value="cross-country">Type 2 (Intermediate)</option>
@@ -220,7 +256,6 @@
             `;
 
             document.getElementById('rental-overview').insertBefore(rentalBox, document.getElementById('rental-overview').firstChild);
-
             const packageTypeSelect = rentalBox.querySelector('.package-type');
             const packageDetails = rentalBox.querySelector('.package-details');
             const highPerformanceOptions = rentalBox.querySelector('.high-performance-options');
@@ -242,43 +277,52 @@
             });
 
             deleteBtn.addEventListener('click', function() {
-                deleteRental(rentalBox, rentalPrice);
+                deleteRental({box: rentalBox, dataId, rentalPrice, next: null});
             });
 
             rentalBox.querySelector('.save-rental-btn').addEventListener('click', function(event) {
                 event.preventDefault();
-                const inputs = Array.from(rentalBox.querySelectorAll('input, select:not(.package-type)'));
-                const inputValues = inputs.map(input => ({
-                    type: input.type === 'checkbox' ? 'checkbox' : 'value',
-                    value: input.type === 'checkbox' ? input.checked : input.value
-                }));
-
-                const firstName = rentalBox.querySelector('input[placeholder="Enter First Name"]');
-                const lastName = rentalBox.querySelector('input[placeholder="Enter Last Name"]');
-                const city = rentalBox.querySelector('input[placeholder="Enter City"]');
-                const zipCode = rentalBox.querySelector('input[placeholder="Enter Zip Code"]');
-                const age = rentalBox.querySelector('input[placeholder="Enter Age"]');
+                const selectedFirstName = rentalBox.querySelector('input[placeholder="Enter First Name"]').value;
+                const selectedLastName = rentalBox.querySelector('input[placeholder="Enter Last Name"]').value;
+                const selectedCity = rentalBox.querySelector('input[placeholder="Enter City"]').value;
+                const selectedZipCode = rentalBox.querySelector('input[placeholder="Enter Zip Code"]').value;
+                const selectedAge = rentalBox.querySelector('input[placeholder="Enter Age"]').value;
+                const selectedWeight = rentalBox.querySelector('input[placeholder="Enter Weight"]').value;
+                const selectedWeightUnit = rentalBox.querySelector('select[placeholder="Select Weight Unit"]').value;
+                const selectedSkiierType = rentalBox.querySelector('select[placeholder="Select Skier Ability"]').value;
+                const isInsuranceChecked = rentalBox.querySelector('.insurance-checkbox').checked;
+                const feet = parseInt(rentalBox.querySelector('select:nth-child(1)').value);
+                const inches = parseInt(rentalBox.querySelector('select:nth-child(2)').value);
+                const andAHalf = rentalBox.querySelector('.insurance-label input[type="checkbox"]').checked ? 0.5 : 0;
+                const selectedHeightInches = feet * 12 + inches + andAHalf;
                 const errorMessage = rentalBox.querySelector('.error-message');
 
-                errorMessage.textContent = ''; // Clear previous errors
-
-                if (!validateInput(firstName.value, 'name') || !validateInput(lastName.value, 'name') || !validateInput(city.value, 'name') || !validateInput(zipCode.value, 'zip') || !validateInput(age.value, 'age')) {
+                if (!validateInput(selectedFirstName, 'name') || !validateInput(selectedLastName, 'name') ||
+                    !validateInput(selectedCity, 'name') || !validateInput(selectedZipCode, 'zip') ||
+                    !validateInput(selectedAge, 'age')) {
                     errorMessage.textContent = 'Please correct the errors in your input.';
                     return;
                 }
 
-                if (rentalBox.querySelector('.insurance-checkbox').checked) {
-                    rentalPrice += 1;
-                }
+                const selectedPackageText = packageTypeSelect.options[packageTypeSelect.selectedIndex].textContent;
+                rentalPrice += isInsuranceChecked ? 1 : 0;  // Adds $1 if insurance is checked
 
                 updateTotalPrice(rentalPrice);
+                const li = addRentalToList(selectedPackageText + " - " + new Date().toLocaleString(), dataId);
+
+                const newNode = {
+                    box: rentalBox,
+                    dataId,
+                    rentalPrice,
+                    next: head
+                };
+                head = newNode;
+
                 alert('Rental saved successfully!');
 
                 rentalBox.querySelectorAll('input, select, button').forEach(function(element) {
                     element.disabled = true;
                 });
-
-                const selectedPackageText = packageTypeSelect.options[packageTypeSelect.selectedIndex].textContent;
 
                 rentalBox.innerHTML = `
                     <div class="collapsed-box">
@@ -288,19 +332,10 @@
                     </div>
                 `;
 
-                const collapsedBox = rentalBox.querySelector('.collapsed-box');
-
-                collapsedBox.querySelector('.toggle-arrow').addEventListener('click', function() {
+                rentalBox.querySelector('.collapsed-box .toggle-arrow').addEventListener('click', function() {
                     rentalBox.innerHTML = '';
                     rentalBox.appendChild(packageTypeSelect.parentNode);
                     rentalBox.appendChild(packageDetails);
-                    inputs.forEach((input, index) => {
-                        if (inputValues[index].type === 'checkbox') {
-                            input.checked = inputValues[index].value;
-                        } else {
-                            input.value = inputValues[index].value;
-                        }
-                    });
                     packageDetails.classList.remove('hidden');
                     toggleArrow.textContent = 'V';
                     packageTypeSelect.disabled = false;
@@ -308,12 +343,12 @@
                         element.disabled = false;
                     });
                     deleteBtn.addEventListener('click', function() {
-                        deleteRental(rentalBox, rentalPrice);
+                        deleteRental(newNode);
                     });
                 });
 
                 rentalBox.querySelector('.delete-btn').addEventListener('click', function() {
-                    deleteRental(rentalBox, rentalPrice);
+                    deleteRental(newNode);
                 });
             });
         });
