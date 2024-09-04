@@ -297,13 +297,39 @@
                 const selectedHeightInches = feet * 12 + inches + andAHalf;
                 const errorMessage = rentalBox.querySelector('.error-message');
 
-                if (!validateInput(selectedFirstName, 'name') || !validateInput(selectedLastName, 'name') ||
-                    !validateInput(selectedCity, 'name') || !validateInput(selectedZipCode, 'zip') ||
-                    !validateInput(selectedAge, 'age')) {
-                    errorMessage.textContent = 'Please correct the errors in your input.';
-                    return;
+                // if (!validateInput(selectedFirstName, 'name') || !validateInput(selectedLastName, 'name') ||
+                //     !validateInput(selectedCity, 'name') || !validateInput(selectedZipCode, 'zip') ||
+                //     !validateInput(selectedAge, 'age')) {
+                //     errorMessage.textContent = 'Please correct the errors in your input.';
+                //     return;
+                // }
+                const weightInLb = null
+                if (selectedWeightUnit = 'Kg') {
+                    weightInLb = selectedWeight * 2.20462
+                } else if (selectedWeightUnit = 'Lb') {
+                    weightInLb = selectedWeight
+                } else if (selectedWeightUnit = 'Select Weight Unit') {
+                    errorMessage.textContent = 'Please select a Weight Unit.'
                 }
 
+                if (!validateInput(selectedFirstName, 'name')) {
+                    errorMessage.textContent = 'Error in First Name'
+                }if (!validateInput(selectedLastName, 'name')) {
+                    errorMessage.textContent = 'Error in Last Name'
+                }if (!validateInput(selectedCity, 'name')) {
+                    errorMessage.textContent = 'Error in City'
+                }if (!validateInput(selectedZipCode, 'zip')) {
+                    errorMessage.textContent = 'Error in Zip Code'
+                }if (!validateInput(selectedAge, 'age')) {
+                    errorMessage.textContent = 'Error in Age'
+                }if (!validateInput(selectedWeight, 'age')) {
+                    errorMessage.textContent = 'Error in Weight'
+                }
+                const minWeight = 25;
+                if (selectedWeight < minWeight) {
+                    errorMessage.textContent = 'Weight must be at least 25'
+                }
+ 
                 const selectedPackageText = packageTypeSelect.options[packageTypeSelect.selectedIndex].textContent;
                 rentalPrice += isInsuranceChecked ? 1 : 0;  // Adds $1 if insurance is checked
 
