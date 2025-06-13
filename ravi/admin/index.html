@@ -7,6 +7,26 @@
   <link rel="stylesheet" href="../css/style.css">
   <script src="../js/admin.js" defer></script>
   <script src="../js/listings-admin.js" defer></script>
+  <style>
+    .toggle-btn {
+      background-color: #ccc;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .toggle-btn.active {
+      background-color: #28a745;
+      color: white;
+    }
+    table.hours-table input[type="time"] {
+      width: 100px;
+    }
+    table.hours-table th, table.hours-table td {
+      padding: 0.5rem;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -15,16 +35,70 @@
       <ul>
         <li><a href="#" data-tab="basic-info">Basic Info</a></li>
         <li><a href="#" data-tab="listings">Listings</a></li>
+        <li><a href="../index.html">Home</a></li>
       </ul>
     </nav>
   </header>
   <main>
     <section id="basic-info" class="admin-tab">
-      <h2>Update Site Info</h2>
+      <h2>Business Hours</h2>
       <form id="admin-form">
-        <label for="hours">Business Hours:</label>
-        <input type="text" id="hours" name="hours" placeholder="e.g. Mon–Fri 9am–5pm" required>
+        <table class="hours-table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Status</th>
+              <th>Open</th>
+              <th>Close</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sunday</td>
+              <td><button type="button" class="toggle-btn" data-day="sunday">Closed</button></td>
+              <td><input type="time" name="sunday_start"></td>
+              <td><input type="time" name="sunday_end"></td>
+            </tr>
+            <tr>
+              <td>Monday</td>
+              <td><button type="button" class="toggle-btn" data-day="monday">Closed</button></td>
+              <td><input type="time" name="monday_start"></td>
+              <td><input type="time" name="monday_end"></td>
+            </tr>
+            <tr>
+              <td>Tuesday</td>
+              <td><button type="button" class="toggle-btn" data-day="tuesday">Closed</button></td>
+              <td><input type="time" name="tuesday_start"></td>
+              <td><input type="time" name="tuesday_end"></td>
+            </tr>
+            <tr>
+              <td>Wednesday</td>
+              <td><button type="button" class="toggle-btn" data-day="wednesday">Closed</button></td>
+              <td><input type="time" name="wednesday_start"></td>
+              <td><input type="time" name="wednesday_end"></td>
+            </tr>
+            <tr>
+              <td>Thursday</td>
+              <td><button type="button" class="toggle-btn" data-day="thursday">Closed</button></td>
+              <td><input type="time" name="thursday_start"></td>
+              <td><input type="time" name="thursday_end"></td>
+            </tr>
+            <tr>
+              <td>Friday</td>
+              <td><button type="button" class="toggle-btn" data-day="friday">Closed</button></td>
+              <td><input type="time" name="friday_start"></td>
+              <td><input type="time" name="friday_end"></td>
+            </tr>
+            <tr>
+              <td>Saturday</td>
+              <td><button type="button" class="toggle-btn" data-day="saturday">Closed</button></td>
+              <td><input type="time" name="saturday_start"></td>
+              <td><input type="time" name="saturday_end"></td>
+            </tr>
+          </tbody>
+        </table>
 
+        <h3>Contact Info</h3>
         <label for="phone">Phone Number:</label>
         <input type="text" id="phone" name="phone" placeholder="e.g. +1-555-555-5555" required>
 
