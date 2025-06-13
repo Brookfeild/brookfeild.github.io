@@ -5,22 +5,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const form = document.getElementById('admin-form');
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
+  // Add toggle behavior to buttons
+  document.querySelectorAll('.toggle-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      button.classList.toggle('active');
+      button.textContent = button.classList.contains('active') ? 'Open' : 'Closed';
+    });
+  });
+
+  // Load settings.json values
   fetch('../settings.json')
     .then(res => res.json())
     .then(data => {
       if (data.hours && typeof data.hours === 'object') {
         days.forEach(day => {
-          const open = document.querySelector(`[name="${day.toLowerCase()}_open"]`);
-          const start = document.querySelector(`[name="${day.toLowerCase()}_start"]`);
-          const end = document.querySelector(`[name="${day.toLowerCase()}_end"]`);
+          const toggle = document.querySelector(`.toggle-btn[data-day="${day}"]`);
+          const start = document.querySelector(`[name="${day}_start"]`);
+          const end = document.querySelector(`[name="${day}_end"]`);
 
-          const setting = data.hours[day];
+          const setting = data.hours[day.charAt(0).toUpperCase() + day.slice(1)];
           if (setting) {
-            open.checked = setting.open;
-            start.value = setting.start || "";
-            end.value = setting.end || "";
+            if (setting.open) toggle.classList.add('active');
+            toggle.textContent = setting.open ? 'Open' : 'Closed';
+            if (start) start.value = setting.start || '';
+            if (end) end.value = setting.end || '';
           }
         });
       }
@@ -28,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('phone').value = data.phone || '';
     });
 
+  // Save settings on submit
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     const result = {
@@ -36,17 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     days.forEach(day => {
-      result.hours[day] = {
-        open: document.querySelector(`[name="${day.toLowerCase()}_open"]`).checked,
-        start: document.querySelector(`[name="${day.toLowerCase()}_start"]`).value,
-        end: document.querySelector(`[name="${day.toLowerCase()}_end"]`).value
+      const toggle = document.querySelector(`.toggle-btn[data-day="${day}"]`);
+      const start = document.querySelector(`[name="${day}_start"]`).value;
+      const end = document.querySelector(`[name="${day}_end"]`).value;
+
+      result.hours[day.charAt(0).toUpperCase() + day.slice(1)] = {
+        open: toggle.classList.contains('active'),
+        start,
+        end
       };
     });
 
     alert('Simulated save to settings.json:\n' + JSON.stringify(result, null, 2));
-    // TODO: Integrate GitHub API or backend to persist settings.json update
+    // TODO: GitHub API/Backend to save result
   });
 
+  // Tab switching
   document.querySelectorAll('nav a[data-tab]').forEach(tabLink => {
     tabLink.addEventListener('click', e => {
       e.preventDefault();
