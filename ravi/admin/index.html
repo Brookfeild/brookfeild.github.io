@@ -3,16 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Portal | DreamHomes Realty</title>
+  <title>Admin Dashboard</title>
   <link rel="stylesheet" href="../css/style.css">
   <script src="../js/admin.js" defer></script>
+  <script src="../js/listings-admin.js" defer></script>
 </head>
 <body>
   <header>
     <h1>Admin Dashboard</h1>
+    <nav>
+      <ul>
+        <li><a href="#" data-tab="basic-info">Basic Info</a></li>
+        <li><a href="#" data-tab="listings">Listings</a></li>
+      </ul>
+    </nav>
   </header>
   <main>
-    <section>
+    <section id="basic-info" class="admin-tab">
       <h2>Update Site Info</h2>
       <form id="admin-form">
         <label for="hours">Business Hours:</label>
@@ -23,6 +30,14 @@
 
         <button type="submit">Save</button>
       </form>
+    </section>
+
+    <section id="listings" class="admin-tab" style="display: none;">
+      <h2>Property Listings</h2>
+      <button id="add-listing">Add New Listing</button>
+      <div id="listings-container">
+        <!-- Listing entries will be dynamically inserted here -->
+      </div>
     </section>
   </main>
 </body>
