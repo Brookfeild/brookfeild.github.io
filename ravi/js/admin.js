@@ -1,28 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Access control
   if (!sessionStorage.getItem('admin-auth')) {
     window.location.href = 'login.html';
     return;
   }
 
+  const form = document.getElementById('admin-form');
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
   fetch('../settings.json')
     .then(res => res.json())
     .then(data => {
-      document.getElementById('hours').value = data.hours;
-      document.getElementById('phone').value = data.phone;
+      if (data.hours && typeof data.hours === 'object') {
+        days.forEach(day => {
+          const open = document.querySelector(`[name="${day.toLowerCase()}_open"]`);
+          const start = document.querySelector(`[name="${day.toLowerCase()}_start"]`);
+          const end = document.querySelector(`[name="${day.toLowerCase()}_end"]`);
+
+          const setting = data.hours[day];
+          if (setting) {
+            open.checked = setting.open;
+            start.value = setting.start || "";
+            end.value = setting.end || "";
+          }
+        });
+      }
+
+      document.getElementById('phone').value = data.phone || '';
     });
 
-  document.getElementById('admin-form').addEventListener('submit', function (e) {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    const updated = {
-      hours: this.hours.value,
-      phone: this.phone.value
+    const result = {
+      phone: document.getElementById('phone').value,
+      hours: {}
     };
 
-    alert('Simulated save (GitHub API or backend required):\n' + JSON.stringify(updated, null, 2));
+    days.forEach(day => {
+      result.hours[day] = {
+        open: document.querySelector(`[name="${day.toLowerCase()}_open"]`).checked,
+        start: document.querySelector(`[name="${day.toLowerCase()}_start"]`).value,
+        end: document.querySelector(`[name="${day.toLowerCase()}_end"]`).value
+      };
+    });
+
+    alert('Simulated save to settings.json:\n' + JSON.stringify(result, null, 2));
+    // TODO: Integrate GitHub API or backend to persist settings.json update
   });
 
-  // Tab switching logic
   document.querySelectorAll('nav a[data-tab]').forEach(tabLink => {
     tabLink.addEventListener('click', e => {
       e.preventDefault();
