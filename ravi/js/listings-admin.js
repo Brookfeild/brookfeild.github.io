@@ -8,13 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
     listings.forEach(listing => {
       const div = document.createElement('div');
       div.className = 'listing';
-      div.innerHTML = `<strong>${listing.basic.title}</strong><p>${listing.basic.address}</p><p>${listing.basic.zip}</p>`;
+      const imageHTML = listing.photos.length ? `<img src="${listing.photos[0]}" alt="Property Photo" style="width:100px; height:auto;">` : '';
+      div.innerHTML = `
+        ${imageHTML}
+        <strong>${listing.basic.title}</strong>
+        <p>${listing.basic.address}</p>
+        <p>${listing.location.zip}</p>
+      `;
       listingsContainer.appendChild(div);
     });
   }
 
   function showAddListingForm() {
     const form = document.createElement('form');
+    form.enctype = 'multipart/form-data';
     form.innerHTML = `
       <h3>Add New Listing</h3>
       <fieldset><legend>Basic Information</legend>
@@ -67,12 +74,24 @@ document.addEventListener('DOMContentLoaded', () => {
         <label>Amenities: <textarea name="amenities"></textarea></label>
       </fieldset>
 
+      <fieldset><legend>Photos</legend>
+        <label>Upload Images: <input type="file" name="photos" accept="image/*" multiple></label>
+      </fieldset>
+
       <button type="submit">Save Listing</button>
     `;
 
     form.addEventListener('submit', e => {
       e.preventDefault();
       const fd = new FormData(form);
+
+      const photos = [];
+      const photoFiles = fd.getAll('photos');
+      photoFiles.forEach(file => {
+        const url = URL.createObjectURL(file);
+        photos.push(url);
+      });
+
       const newListing = {
         basic: {
           title: fd.get('title'),
@@ -114,8 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
           junior: fd.get('junior'),
           high: fd.get('high')
         },
-        amenities: fd.get('amenities')
+        amenities: fd.get('amenities'),
+        photos: photos
       };
+
       listings.push(newListing);
       renderListings();
       form.remove();
