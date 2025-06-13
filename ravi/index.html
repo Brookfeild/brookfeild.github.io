@@ -1,58 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ravi Duvae Realty | Find Your Perfect Home</title>
-  <meta name="description" content="Browse beautiful homes for sale or rent. Ravi Duvae Realty helps you find your dream property quickly and easily.">
-  <meta name="keywords" content="real estate, homes for sale, apartments, houses, DreamHomes Realty">
-  <link rel="canonical" href="https://www.example.com/" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "Ravi Duvae Real Estate",
-    "url": "ravi.circle.band",
-    "sameAs": ["https://facebook.com/dreamhomes", "https://instagram.com/dreamhomesrealty"],
-    "areaServed": "United States",
-    "openingHours": "Mo-Fr 09:00-18:00",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+1-555-555-5555",
-      "contactType": "Customer Support"
-    }
-  }
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamHomes Realty</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Ravi Duvae Realty</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="listings.html">Listings</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="admin/login.html">Admin</a></li>
-      </ul>
-    </nav>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-logo">DreamHomes Realty</h1>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="listings.html">Listings</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin/login.html">Admin</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <h2>Your Dream Home Awaits</h2>
-      <p>Explore premium listings across the country.</p>
-    </section>
+  <section class="hero-section">
+    <div class="hero-content">
+      <h2>Find Your Dream Home</h2>
+      <p>Search from hundreds of listings to find the perfect place to call home.</p>
+      <a href="listings.html" class="btn-primary">Browse Listings</a>
+    </div>
+  </section>
 
-    <section class="featured-listings">
-      <h2>Featured Listings</h2>
-      <!-- Inject listing cards here -->
-    </section>
-  </main>
+  <section class="featured-listings">
+    <div class="container">
+      <h3>Featured Properties</h3>
+      <div class="listings-grid">
+        <div class="property-card">
+          <img src="images/house1.jpg" alt="Modern House">
+          <div class="property-info">
+            <h4>Modern 3BR Home</h4>
+            <p>$350,000 · Shrewsbury</p>
+          </div>
+        </div>
+        <div class="property-card">
+          <img src="images/house2.jpg" alt="Downtown Apartment">
+          <div class="property-info">
+            <h4>Downtown Apartment</h4>
+            <p>$270,000 · City Center</p>
+          </div>
+        </div>
+        <!-- More properties here -->
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    <p>&copy; 2025 DreamHomes Realty | <a href="sitemap.xml">Sitemap</a></p>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 DreamHomes Realty · <a href="sitemap.xml">Sitemap</a></p>
+    </div>
   </footer>
 </body>
 </html>
