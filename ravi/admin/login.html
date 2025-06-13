@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const user = this.username.value;
+        const pass = this.password.value;
+
+        // Simulated credential check (should be done server-side securely)
+        if (user === 'admin' && pass === 'securepassword') {
+          sessionStorage.setItem('admin-auth', 'true');
+          window.location.href = 'index.html';
+        } else {
+          alert('Invalid credentials.');
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <main>
+    <h2>Admin Login</h2>
+    <form id="login-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Log In</button>
+    </form>
+  </main>
+</body>
+</html>
