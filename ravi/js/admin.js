@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Access control
+  if (!sessionStorage.getItem('admin-auth')) {
+    window.location.href = 'login.html';
+    return;
+  }
+
   fetch('../settings.json')
     .then(res => res.json())
     .then(data => {
