@@ -14,7 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     alert('Simulated save (GitHub API or backend required):\n' + JSON.stringify(updated, null, 2));
+  });
 
-    // Future: send `updated` to GitHub API or backend service
+  // Tab switching logic
+  document.querySelectorAll('nav a[data-tab]').forEach(tabLink => {
+    tabLink.addEventListener('click', e => {
+      e.preventDefault();
+      const selected = tabLink.dataset.tab;
+      document.querySelectorAll('.admin-tab').forEach(tab => {
+        tab.style.display = tab.id === selected ? 'block' : 'none';
+      });
+    });
   });
 });
