@@ -1,35 +1,5 @@
 [
     {
-        "title": "yoooo",
-        "mlspin": "",
-        "rooms": "",
-        "yearBuilt": "",
-        "roof": "",
-        "livingArea": "",
-        "foundation": "",
-        "acreage": "",
-        "garageSpaces": "",
-        "virtualTour": "",
-        "town": "",
-        "county": "",
-        "state": "",
-        "zip": "",
-        "taxes": "",
-        "basement": "",
-        "fireplace": false,
-        "fireplacesTotal": "",
-        "fireplaceFeatures": "",
-        "parkingSpaces": "",
-        "parkingFeatures": "",
-        "heatSystem": false,
-        "appliances": "",
-        "elementary": "",
-        "junior": "",
-        "high": "",
-        "amenities": "",
-        "images": []
-    },
-    {
         "title": "241 Red Acre Road",
         "mlspin": "73390861",
         "rooms": "41",
@@ -148,5 +118,9 @@
         "high": "Nashoba Regional",
         "amenities": "Shopping, Tennis Court(s), Park, Walk/Jog Trails, Stable(s), Golf, Conservation Area, Highway Access, Public School",
         "images": []
+        "amenities": "Public Transportation, Shopping, Pool, Walk\/Jog Trails, Stable(s), Golf, Medical Facility, Bike Path, Conservation Area, Highway Access, House of Worship, Public School, T-Station",
+        "images": [
+            "uploads\/1749892817-samplehouse.PNG"
+        ]
     }
 ]
