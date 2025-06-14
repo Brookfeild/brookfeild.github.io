@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Load and display existing listings
-  fetch('../../listings.json')
+  fetch('/ravi/listings.json')
     .then(res => res.json())
     .then(data => {
       data.forEach((l, i) => {

@@ -101,7 +101,8 @@
         body: fd
       })
       .then(res => res.text())
-      .then(alert);
+      .then(alert)
+      .catch(err => alert('Error: ' + err));
     });
   </script>
 </body>

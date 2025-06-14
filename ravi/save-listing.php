@@ -1,7 +1,7 @@
 <?php
 $repoPath = __DIR__;
-$listingsFile = $repoPath . '/listings.json';
-$uploadDir = $repoPath . '/uploads/';
+$listingsFile = $repoPath . '/ravi/listings.json';
+$uploadDir = $repoPath . '/ravi/uploads/';
 
 // Ensure the uploads directory exists
 if (!is_dir($uploadDir)) mkdir($uploadDir);
