@@ -72,32 +72,34 @@
     const params = new URLSearchParams(window.location.search);
     const index = params.get('index');
 
-    if (index !== null) {
+    // Load listing for editing
+    if (index !== null && !isNaN(index)) {
       fetch('/ravi/listings.json')
         .then(res => res.json())
         .then(data => {
           const listing = data[index];
           if (listing) {
             document.getElementById('form-title').textContent = 'Edit Listing';
-            Object.entries(listing).forEach(([key, val]) => {
+            form.index.value = index;
+            for (const [key, val] of Object.entries(listing)) {
               const el = form.elements[key];
-              if (!el) return;
+              if (!el) continue;
               if (el.type === 'checkbox') {
                 el.checked = val === true || val === 'true';
               } else {
                 el.value = val;
               }
-            });
-            form.index.value = index;
+            }
           }
         });
     }
 
+    // Handle form submission
     form.addEventListener('submit', e => {
       e.preventDefault();
       const fd = new FormData(form);
 
-      // Debug: Log FormData entries to the console
+      // Debug: log form data
       for (const [key, val] of fd.entries()) {
         console.log(key, val);
       }
@@ -110,9 +112,12 @@
         method: 'POST',
         body: fd
       })
-      .then(res => res.text())
+      .then(res => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
       .then(msg => alert(msg))
-      .catch(err => alert('Error: ' + err));
+      .catch(err => alert('Error: ' + err.message));
     });
   </script>
 </body>
