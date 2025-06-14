@@ -28,13 +28,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.textContent = `${l.title || 'Untitled'} (${l.zip || 'N/A'})`;
 
+        // Edit button
         const btn = document.createElement('button');
         btn.textContent = 'Edit';
         btn.onclick = () => {
           iframe.src = `listings/form.html?index=${i}`;
         };
-
         li.appendChild(btn);
+
+        // NEW: Delete button
+        const del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.style.marginLeft = '10px';
+        del.onclick = () => {
+          if (confirm('Are you sure you want to delete this listing?')) {
+            fetch('/ravi/delete-listing.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ index: i })
+            })
+            .then(res => res.text())
+            .then(msg => {
+              alert(msg);
+              location.reload();
+            });
+          }
+        };
+        li.appendChild(del);
+
         listEl.appendChild(li);
       });
     })

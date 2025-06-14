@@ -3,8 +3,8 @@ $repoPath = __DIR__;
 $listingsFile = $repoPath . '/listings.json';
 $uploadDir = $repoPath . '/uploads/';
 
-// Ensure the uploads directory exists
-if (!is_dir($uploadDir)) mkdir($uploadDir);
+// Ensure the uploads directory exists and is writable
+if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
 // Debug: Log form data and file uploads
 file_put_contents('/tmp/form-debug.log', print_r($_POST, true));
