@@ -74,7 +74,7 @@
 
     // Load listing for editing
     if (index !== null && !isNaN(index)) {
-      fetch('/ravi/listings.json')
+      fetch('/listings.json')
         .then(res => res.json())
         .then(data => {
           const listing = data[index];
