@@ -116,9 +116,8 @@
         "elementary": "Center School",
         "junior": "Hale Middle",
         "high": "Nashoba Regional",
-        "amenities": "Shopping, Tennis Court(s), Park, Walk/Jog Trails, Stable(s), Golf, Conservation Area, Highway Access, Public School",
-        "images": []
-        "amenities": "Public Transportation, Shopping, Pool, Walk\/Jog Trails, Stable(s), Golf, Medical Facility, Bike Path, Conservation Area, Highway Access, House of Worship, Public School, T-Station",
+
+        "amenities": "Public Transportation, Shopping, Pool, Walk/Jog Trails, Stable(s), Golf, Medical Facility, Bike Path, Conservation Area, Highway Access, House of Worship, Public School, T-Station",
         "images": [
             "uploads\/1749892817-samplehouse.PNG"
         ]
