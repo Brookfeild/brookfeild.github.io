@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showAddListingForm() {
     const form = document.createElement('form');
+    form.setAttribute('enctype', 'multipart/form-data');
     form.innerHTML = `
       <h3>Add New Listing</h3>
       <fieldset><legend>Basic Information</legend>
@@ -72,60 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
         <label>Amenities: <textarea name="amenities"></textarea></label>
       </fieldset>
 
+      <fieldset><legend>Images</legend>
+        <label>Upload Images: <input type="file" name="images[]" multiple accept="image/*"></label>
+      </fieldset>
+
       <button type="submit">Save Listing</button>
     `;
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const fd = new FormData(form);
-      const newListing = {
-        basic: {
-          title: fd.get('title'),
-          mlspin: fd.get('mlspin'),
-          rooms: fd.get('rooms'),
-          yearBuilt: fd.get('yearBuilt'),
-          roof: fd.get('roof'),
-          livingArea: fd.get('livingArea'),
-          foundation: fd.get('foundation'),
-          acreage: fd.get('acreage'),
-          garageSpaces: fd.get('garageSpaces'),
-          address: fd.get('town') + ', ' + fd.get('state')
-        },
-        location: {
-          town: fd.get('town'),
-          county: fd.get('county'),
-          state: fd.get('state'),
-          zip: fd.get('zip')
-        },
-        finance: {
-          taxes: fd.get('taxes')
-        },
-        interior: {
-          basement: fd.get('basement'),
-          fireplace: fd.get('fireplace') === 'on',
-          fireplacesTotal: fd.get('fireplacesTotal'),
-          fireplaceFeatures: fd.get('fireplaceFeatures')
-        },
-        exterior: {
-          parkingSpaces: fd.get('parkingSpaces'),
-          parkingFeatures: fd.get('parkingFeatures')
-        },
-        utilities: {
-          heatSystem: fd.get('heatSystem') === 'on',
-          appliances: fd.get('appliances')
-        },
-        schools: {
-          elementary: fd.get('elementary'),
-          junior: fd.get('junior'),
-          high: fd.get('high')
-        },
-        amenities: fd.get('amenities')
-      };
-
+      const formData = new FormData(form);
       fetch('../../save-listing.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newListing)
+        body: formData
       })
       .then(res => res.text())
       .then(msg => {
