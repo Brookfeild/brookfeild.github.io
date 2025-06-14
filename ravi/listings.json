@@ -1,58 +1,33 @@
 [
     {
-        "basic": {
-            "title": "t",
-            "mlspin": "t",
-            "rooms": "5",
-            "yearBuilt": "5",
-            "roof": "5",
-            "livingArea": "5",
-            "foundation": "t",
-            "acreage": "t",
-            "garageSpaces": "5",
-            "address": "t, t"
-        },
-        "location": {
-            "town": "t",
-            "county": "t",
-            "state": "t",
-            "zip": "t"
-        },
-        "finance": {
-            "taxes": "t"
-        },
-        "interior": {
-            "basement": "t",
-            "fireplace": false,
-            "fireplacesTotal": "5",
-            "fireplaceFeatures": "t"
-        },
-        "exterior": {
-            "parkingSpaces": "t",
-            "parkingFeatures": "t"
-        },
-        "utilities": {
-            "heatSystem": false,
-            "appliances": "t"
-        },
-        "schools": {
-            "elementary": "t",
-            "junior": "t",
-            "high": "t"
-        },
-        "amenities": "t",
-        "title": "undefined",
-        "zip": "undefined",
-        "images": [
-            "uploads\/1749868454-berd.PNG"
-        ]
-    },
-    {
-        "index": "-1",
-        "title": "241 Red Acre Road Stow,MA01775",
-        "zip": "01775",
-        "images": [
-            "uploads\/1749869266-berd.PNG"
-        ]
+      "title": "241 Red Acre Road",
+      "mlspin": "73390861",
+      "rooms": "13",
+      "yearBuilt": "1985",
+      "roof": "Shingle",
+      "livingArea": "3,917",
+      "foundation": "Concrete Perimeter",
+      "acreage": "2.2",
+      "garageSpaces": "3",
+      "virtualTour": "https://example.com/virtual-tour",
+      "town": "Stow",
+      "county": "Middlesex",
+      "state": "MA",
+      "zip": "01775",
+      "taxes": "$14,770",
+      "basement": "Full, Finished, Walk-Out Access, Interior Entry, Garage Access",
+      "fireplace": true,
+      "fireplacesTotal": "1",
+      "fireplaceFeatures": "Living Room",
+      "parkingSpaces": "10",
+      "parkingFeatures": "Attached, Off Street, Paved",
+      "heatSystem": true,
+      "appliances": "Water Heater, Range, Dishwasher, Microwave, Refrigerator, Washer, Dryer, Water Treatment, Water Softener",
+      "elementary": "Center",
+      "junior": "Hale",
+      "high": "Nashoba Regional",
+      "amenities": "Public Transportation, Shopping, Pool, Walk/Jog Trails, Stable(s), Golf, Medical Facility, Bike Path, Conservation Area, Highway Access, House of Worship, Public School, T-Station",
+      "images": []
     }
-]
+  ]
+  

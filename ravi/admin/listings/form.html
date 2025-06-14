@@ -99,9 +99,9 @@
       e.preventDefault();
       const fd = new FormData(form);
 
-      // Debug: log form data
+      // Debug: log form data to confirm all fields are populated correctly
       for (const [key, val] of fd.entries()) {
-        console.log(key, val);
+        console.log(key, val);  // <-- confirm all form fields show here
       }
 
       const action = form.index.value >= 0
