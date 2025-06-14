@@ -117,25 +117,62 @@ header nav a:hover {
   text-decoration: underline;
 }
 
-/* Listing card styling */
+/* Listings Container */
+#listings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Each Listing Card */
 .listing-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1em;
-  margin-bottom: 1.5em;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  background-color: #f9f9f9;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 340px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
 }
 
-.listing-card h2 {
-  margin-top: 0;
-  color: #333;
+.listing-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Listing Image */
 .listing-card img {
-  max-width: 100%;
-  border-radius: 4px;
-  margin-top: 0.5em;
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+}
+
+/* Headings & Text */
+.listing-card h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.listing-card h3 {
+  margin-top: 1.2rem;
+  font-size: 1.1rem;
+  color: #444;
+  border-left: 4px solid #3f51b5;
+  padding-left: 0.5rem;
+}
+
+.listing-card p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  color: #555;
 }
 
 /* Form iframe and listing admin layout */
@@ -197,4 +234,16 @@ form button[type="submit"] {
 
 form button[type="submit"]:hover {
   background-color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #listings {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .listing-card {
+    width: 90%;
+  }
 }
