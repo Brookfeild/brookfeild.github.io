@@ -40,6 +40,11 @@
             "junior": "t",
             "high": "t"
         },
-        "amenities": "t"
+        "amenities": "t",
+        "title": "undefined",
+        "zip": "undefined",
+        "images": [
+            "uploads\/1749868454-berd.PNG"
+        ]
     }
 ]
