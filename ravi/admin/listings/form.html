@@ -79,8 +79,14 @@
           const listing = data[index];
           if (listing) {
             document.getElementById('form-title').textContent = 'Edit Listing';
-            Object.keys(listing).forEach(key => {
-              if (form[key]) form[key].value = listing[key];
+            Object.entries(listing).forEach(([key, val]) => {
+              const el = form.elements[key];
+              if (!el) return;
+              if (el.type === 'checkbox') {
+                el.checked = val === true || val === 'true';
+              } else {
+                el.value = val;
+              }
             });
             form.index.value = index;
           }
@@ -89,13 +95,20 @@
 
     form.addEventListener('submit', e => {
       e.preventDefault();
+      const fd = new FormData(form);
+
+      // Debug: Log FormData entries to the console
+      for (const [key, val] of fd.entries()) {
+        console.log(key, val);
+      }
+
       const action = form.index.value >= 0
         ? '/ravi/update-listing.php'
         : '/ravi/save-listing.php';
 
       fetch(action, {
         method: 'POST',
-        body: new FormData(form)
+        body: fd
       })
       .then(res => res.text())
       .then(msg => alert(msg))

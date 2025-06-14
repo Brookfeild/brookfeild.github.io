@@ -6,6 +6,10 @@ $uploadDir = $repoPath . '/ravi/uploads/';
 // Ensure the uploads directory exists
 if (!is_dir($uploadDir)) mkdir($uploadDir);
 
+// Debug: Log form data and file uploads
+file_put_contents('/tmp/form-debug.log', print_r($_POST, true));
+file_put_contents('/tmp/files-debug.log', print_r($_FILES, true));
+
 // Validate form data
 $data = $_POST;
 if (!$data || count($data) === 0) {
