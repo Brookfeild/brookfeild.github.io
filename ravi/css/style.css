@@ -106,3 +106,13 @@ header nav a:hover {
 .admin-link:hover {
   background-color: #ffa726;
 }
+
+/* New styles added */
+.home-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.6em;
+}
+.home-link:hover {
+  text-decoration: underline;
+}
