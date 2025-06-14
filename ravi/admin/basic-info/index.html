@@ -10,7 +10,8 @@
   </head>
 <body>
   <div id="admin-header"></div>
-  <main>
+
+  <main class="admin-container">
     <section>
       <h2>Update Site Info</h2>
       <form id="admin-form">
@@ -24,5 +25,54 @@
       </form>
     </section>
   </main>
+
+  <script>
+    // Redirect to login if not logged in
+    if (!sessionStorage.getItem('loggedIn')) {
+      window.location.href = '/ravi/admin/login.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load header partial
+      fetch('/ravi/partials/admin-header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('admin-header').innerHTML = html;
+          // Fix broken link paths
+          document.querySelectorAll('#admin-header a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('/ravi/')) {
+              link.setAttribute('href', '/ravi/' + href.replace(/^\/?/, ''));
+            }
+          });
+        });
+
+      // Fetch and display business info
+      fetch('/ravi/settings.json')
+        .then(res => res.json())
+        .then(data => {
+          const basicSection = document.getElementById('basic-info');
+          basicSection.innerHTML = `
+            <h3>Business Info</h3>
+            <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
+            <p><strong>Hours:</strong> ${data.hours || 'N/A'}</p>
+          `;
+        });
+    });
+
+    // Handle form submission
+    document.getElementById('admin-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      fetch('/ravi/update-settings.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg))
+      .catch(err => alert('Error: ' + err.message));
+    });
+  </script>
 </body>
 </html>

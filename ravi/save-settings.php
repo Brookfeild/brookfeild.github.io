@@ -1,15 +1,24 @@
 <?php
+// Enable error logging for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $repoPath = __DIR__;
 $settingsFile = $repoPath . '/settings.json';
 
-$data = file_get_contents('php://input');
+$data = $_POST;
 if (!$data) {
   http_response_code(400);
-  exit('No input');
+  echo "No data received";
+  exit;
 }
 
-// Save the new settings.json content
-file_put_contents($settingsFile, $data);
+if (file_put_contents($settingsFile, json_encode($data, JSON_PRETTY_PRINT)) === false) {
+  http_response_code(500);
+  echo "Failed to save settings.";
+  exit;
+}
 
 // Set HOME for Apache Git config
 putenv('HOME=/var/www/.git-home');
