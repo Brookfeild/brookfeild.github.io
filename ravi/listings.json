@@ -1,0 +1,45 @@
+[
+    {
+        "basic": {
+            "title": "t",
+            "mlspin": "t",
+            "rooms": "5",
+            "yearBuilt": "5",
+            "roof": "5",
+            "livingArea": "5",
+            "foundation": "t",
+            "acreage": "t",
+            "garageSpaces": "5",
+            "address": "t, t"
+        },
+        "location": {
+            "town": "t",
+            "county": "t",
+            "state": "t",
+            "zip": "t"
+        },
+        "finance": {
+            "taxes": "t"
+        },
+        "interior": {
+            "basement": "t",
+            "fireplace": false,
+            "fireplacesTotal": "5",
+            "fireplaceFeatures": "t"
+        },
+        "exterior": {
+            "parkingSpaces": "t",
+            "parkingFeatures": "t"
+        },
+        "utilities": {
+            "heatSystem": false,
+            "appliances": "t"
+        },
+        "schools": {
+            "elementary": "t",
+            "junior": "t",
+            "high": "t"
+        },
+        "amenities": "t"
+    }
+]
