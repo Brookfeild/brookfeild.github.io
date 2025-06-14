@@ -27,4 +27,18 @@ $output = shell_exec("/usr/bin/git -C $gitRoot pull 2>&1");
 file_put_contents($logFile, "Git Output:\n$output\n\n", FILE_APPEND);
 
 echo "Deployed.";
+
+// Additional logic to handle git pull errors
+putenv('HOME=/var/www/.git-home');
+chdir('/var/www/git/brookfeild.github.io');
+exec('git pull origin master 2>&1', $output, $return);
+
+file_put_contents('/tmp/webhook-debug.log', implode("\n", $output), FILE_APPEND);
+
+if ($return !== 0) {
+    http_response_code(500);
+    echo "Git pull failed";
+} else {
+    echo "Git pulled successfully";
+}
 ?>
