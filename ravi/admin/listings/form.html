@@ -73,7 +73,7 @@
     const index = params.get('index');
 
     if (index !== null) {
-      fetch('../../listings.json')
+      fetch('/ravi/listings.json')
         .then(res => res.json())
         .then(data => {
           const listing = data[index];
@@ -89,19 +89,16 @@
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const fd = new FormData(form);
-      
-      // Debug: Log FormData entries to the console
-      for (let [key, val] of fd.entries()) {
-        console.log(key, val);
-      }
+      const action = form.index.value >= 0
+        ? '/ravi/update-listing.php'
+        : '/ravi/save-listing.php';
 
-      fetch(form.index.value >= 0 ? '../../update-listing.php' : '../../save-listing.php', {
+      fetch(action, {
         method: 'POST',
-        body: fd
+        body: new FormData(form)
       })
       .then(res => res.text())
-      .then(alert)
+      .then(msg => alert(msg))
       .catch(err => alert('Error: ' + err));
     });
   </script>
