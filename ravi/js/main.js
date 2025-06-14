@@ -3,10 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('settings.json')
     .then(res => res.json())
     .then(data => {
+      // Update site phone and hours
       const phoneElement = document.getElementById('site-phone');
       const hoursElement = document.getElementById('site-hours');
       if (phoneElement) phoneElement.textContent = data.phone;
-      if (hoursElement) hoursElement.textContent = data.hours;
+      if (hoursElement) phoneElement.textContent = data.hours;
+
+      // Update public phone number
+      const phoneEl = document.getElementById('public-phone');
+      if (phoneEl && data.phone) phoneEl.textContent = data.phone;
+
+      // Update business hours
+      const hoursEl = document.getElementById('business-hours');
+      if (hoursEl && data.hours) {
+        hoursEl.innerHTML = Object.entries(data.hours)
+          .map(([day, info]) =>
+            `<li>${day}: ${info.open ? `${info.start} – ${info.end}` : 'Closed'}</li>`)
+          .join('');
+      }
     })
     .catch(err => console.error('Failed to load site settings:', err));
 
