@@ -44,6 +44,13 @@
         .then(res => res.text())
         .then(html => {
           document.getElementById('admin-header').innerHTML = html;
+          // Fix broken link paths
+          document.querySelectorAll('#admin-header a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('/ravi/')) {
+              link.setAttribute('href', '/ravi/' + href.replace(/^\/?/, ''));
+            }
+          });
         });
 
       fetch('/ravi/settings.json')
