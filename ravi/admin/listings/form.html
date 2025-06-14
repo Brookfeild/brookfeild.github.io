@@ -80,16 +80,16 @@
           const listing = data[index];
           if (listing) {
             document.getElementById('form-title').textContent = 'Edit Listing';
-            form.index.value = index;
-            for (const [key, val] of Object.entries(listing)) {
+            for (const [key, value] of Object.entries(listing)) {
               const el = form.elements[key];
               if (!el) continue;
               if (el.type === 'checkbox') {
-                el.checked = val === true || val === 'true';
+                el.checked = value === true || value === 'true';
               } else {
-                el.value = val;
+                el.value = value;
               }
             }
+            form.index.value = index;
           }
         });
     }
