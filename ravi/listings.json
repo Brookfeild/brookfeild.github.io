@@ -58,6 +58,36 @@
         "high": "",
         "amenities": "",
         "images": []
+    },
+    {
+        "title": "grsdgrxg",
+        "mlspin": "",
+        "rooms": "",
+        "yearBuilt": "",
+        "roof": "",
+        "livingArea": "",
+        "foundation": "",
+        "acreage": "",
+        "garageSpaces": "",
+        "virtualTour": "",
+        "town": "",
+        "county": "",
+        "state": "",
+        "zip": "",
+        "taxes": "",
+        "basement": "",
+        "fireplace": false,
+        "fireplacesTotal": "",
+        "fireplaceFeatures": "",
+        "parkingSpaces": "",
+        "parkingFeatures": "",
+        "heatSystem": false,
+        "appliances": "",
+        "elementary": "",
+        "junior": "",
+        "high": "",
+        "amenities": "",
+        "images": []
     }
 ]
   
