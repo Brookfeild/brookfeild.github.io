@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Listing Form</title>
+</head>
+<body>
+  <form id="listing-form" enctype="multipart/form-data">
+    <h2 id="form-title">New Listing</h2>
+    <input type="hidden" name="index" value="-1" />
+    <label>Title: <input name="title" required /></label>
+    <label>Zip: <input name="zip" required /></label>
+    <label>Upload Images: <input type="file" name="images[]" multiple /></label>
+    <button type="submit">Save</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('listing-form');
+    const params = new URLSearchParams(window.location.search);
+    const index = params.get('index');
+
+    if (index !== null) {
+      fetch('../../listings.json')
+        .then(res => res.json())
+        .then(data => {
+          const listing = data[index];
+          if (listing) {
+            document.getElementById('form-title').textContent = 'Edit Listing';
+            form.title.value = listing.title;
+            form.zip.value = listing.zip;
+            form.index.value = index;
+          }
+        });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const url = form.index.value >= 0 ? '../../update-listing.php' : '../../save-listing.php';
+      fetch(url, { method: 'POST', body: formData })
+        .then(res => res.text())
+        .then(alert);
+    });
+  </script>
+</body>
+</html>
