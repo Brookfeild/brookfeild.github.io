@@ -13,40 +13,6 @@ if (!$data || count($data) === 0) {
   exit('No form data');
 }
 
-// Access form fields explicitly
-$title = $_POST['title'] ?? '';
-$mlspin = $_POST['mlspin'] ?? '';
-$rooms = $_POST['rooms'] ?? '';
-$yearBuilt = $_POST['yearBuilt'] ?? '';
-$roof = $_POST['roof'] ?? '';
-$livingArea = $_POST['livingArea'] ?? '';
-$foundation = $_POST['foundation'] ?? '';
-$acreage = $_POST['acreage'] ?? '';
-$garageSpaces = $_POST['garageSpaces'] ?? '';
-$virtualTour = $_POST['virtualTour'] ?? '';
-
-$town = $_POST['town'] ?? '';
-$county = $_POST['county'] ?? '';
-$state = $_POST['state'] ?? '';
-$zip = $_POST['zip'] ?? '';
-
-$taxes = $_POST['taxes'] ?? '';
-$basement = $_POST['basement'] ?? '';
-$fireplace = isset($_POST['fireplace']) ? true : false;
-$fireplacesTotal = $_POST['fireplacesTotal'] ?? '';
-$fireplaceFeatures = $_POST['fireplaceFeatures'] ?? '';
-
-$parkingSpaces = $_POST['parkingSpaces'] ?? '';
-$parkingFeatures = $_POST['parkingFeatures'] ?? '';
-$heatSystem = isset($_POST['heatSystem']) ? true : false;
-$appliances = $_POST['appliances'] ?? '';
-
-$elementary = $_POST['elementary'] ?? '';
-$junior = $_POST['junior'] ?? '';
-$high = $_POST['high'] ?? '';
-
-$amenities = $_POST['amenities'] ?? '';
-
 // Handle image uploads
 $images = [];
 if (!empty($_FILES['images']['name'][0])) {
@@ -64,33 +30,37 @@ $listings = file_exists($listingsFile) ? json_decode(file_get_contents($listings
 
 // Add the new listing with images
 $newListing = [
-  'title' => $title,
-  'mlspin' => $mlspin,
-  'rooms' => $rooms,
-  'yearBuilt' => $yearBuilt,
-  'roof' => $roof,
-  'livingArea' => $livingArea,
-  'foundation' => $foundation,
-  'acreage' => $acreage,
-  'garageSpaces' => $garageSpaces,
-  'virtualTour' => $virtualTour,
-  'town' => $town,
-  'county' => $county,
-  'state' => $state,
-  'zip' => $zip,
-  'taxes' => $taxes,
-  'basement' => $basement,
-  'fireplace' => $fireplace,
-  'fireplacesTotal' => $fireplacesTotal,
-  'fireplaceFeatures' => $fireplaceFeatures,
-  'parkingSpaces' => $parkingSpaces,
-  'parkingFeatures' => $parkingFeatures,
-  'heatSystem' => $heatSystem,
-  'appliances' => $appliances,
-  'elementary' => $elementary,
-  'junior' => $junior,
-  'high' => $high,
-  'amenities' => $amenities,
+  'title' => $_POST['title'] ?? '',
+  'mlspin' => $_POST['mlspin'] ?? '',
+  'rooms' => $_POST['rooms'] ?? '',
+  'yearBuilt' => $_POST['yearBuilt'] ?? '',
+  'roof' => $_POST['roof'] ?? '',
+  'livingArea' => $_POST['livingArea'] ?? '',
+  'foundation' => $_POST['foundation'] ?? '',
+  'acreage' => $_POST['acreage'] ?? '',
+  'garageSpaces' => $_POST['garageSpaces'] ?? '',
+  'virtualTour' => $_POST['virtualTour'] ?? '',
+
+  'town' => $_POST['town'] ?? '',
+  'county' => $_POST['county'] ?? '',
+  'state' => $_POST['state'] ?? '',
+  'zip' => $_POST['zip'] ?? '',
+
+  'taxes' => $_POST['taxes'] ?? '',
+  'basement' => $_POST['basement'] ?? '',
+  'fireplace' => isset($_POST['fireplace']),
+  'fireplacesTotal' => $_POST['fireplacesTotal'] ?? '',
+  'fireplaceFeatures' => $_POST['fireplaceFeatures'] ?? '',
+
+  'parkingSpaces' => $_POST['parkingSpaces'] ?? '',
+  'parkingFeatures' => $_POST['parkingFeatures'] ?? '',
+  'heatSystem' => isset($_POST['heatSystem']),
+  'appliances' => $_POST['appliances'] ?? '',
+
+  'elementary' => $_POST['elementary'] ?? '',
+  'junior' => $_POST['junior'] ?? '',
+  'high' => $_POST['high'] ?? '',
+  'amenities' => $_POST['amenities'] ?? '',
   'images' => $images
 ];
 $listings[] = $newListing;

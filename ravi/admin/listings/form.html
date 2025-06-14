@@ -90,9 +90,15 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
       const fd = new FormData(form);
+      
+      // Debug: Log FormData entries to the console
+      for (let [key, val] of fd.entries()) {
+        console.log(key, val);
+      }
+
       fetch(form.index.value >= 0 ? '../../update-listing.php' : '../../save-listing.php', {
         method: 'POST',
-        body: fd // Do NOT use JSON.stringify — just send FormData directly
+        body: fd
       })
       .then(res => res.text())
       .then(alert);
