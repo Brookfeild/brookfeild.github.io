@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Open the form for adding a new listing
   document.getElementById('add-listing').onclick = () => {
-    iframe.src = 'form.html';
+    iframe.src = 'listings/form.html';
   };
 
   // Load and display existing listings
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.textContent = l.title + ' (' + l.zip + ')';
         const btn = document.createElement('button');
         btn.textContent = 'Edit';
-        btn.onclick = () => iframe.src = 'form.html?index=' + i;
+        btn.onclick = () => iframe.src = 'listings/form.html?index=' + i;
         li.appendChild(btn);
         listEl.appendChild(li);
       });
