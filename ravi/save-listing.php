@@ -1,7 +1,7 @@
 <?php
 $repoPath = __DIR__;
-$listingsFile = $repoPath . '/ravi/listings.json';
-$uploadDir = $repoPath . '/ravi/uploads/';
+$listingsFile = $repoPath . '/listings.json';
+$uploadDir = $repoPath . '/uploads/';
 
 // Ensure the uploads directory exists
 if (!is_dir($uploadDir)) mkdir($uploadDir);
@@ -30,7 +30,14 @@ if (!empty($_FILES['images']['name'][0])) {
 }
 
 // Load existing listings
-$listings = file_exists($listingsFile) ? json_decode(file_get_contents($listingsFile), true) : [];
+$listings = [];
+if (file_exists($listingsFile)) {
+  $raw = file_get_contents($listingsFile);
+  $json = json_decode($raw, true);
+  if (is_array($json)) {
+    $listings = $json;
+  }
+}
 
 // Add the new listing with images
 $newListing = [
@@ -68,7 +75,12 @@ $newListing = [
   'images' => $images
 ];
 $listings[] = $newListing;
-file_put_contents($listingsFile, json_encode($listings, JSON_PRETTY_PRINT));
+
+// Save listings to file and check for errors
+if (file_put_contents($listingsFile, json_encode($listings, JSON_PRETTY_PRINT)) === false) {
+  http_response_code(500);
+  exit("Failed to write listings.json");
+}
 
 // Commit and push changes to Git
 putenv('HOME=/var/www/.git-home');
