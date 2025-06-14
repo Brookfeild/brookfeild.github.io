@@ -8,9 +8,62 @@
   <form id="listing-form" enctype="multipart/form-data">
     <h2 id="form-title">New Listing</h2>
     <input type="hidden" name="index" value="-1" />
-    <label>Title: <input name="title" required /></label>
-    <label>Zip: <input name="zip" required /></label>
-    <label>Upload Images: <input type="file" name="images[]" multiple /></label>
+
+    <fieldset><legend>Basic Information</legend>
+      <label>Title: <input name="title" required /></label>
+      <label>MLSPIN: <input name="mlspin" /></label>
+      <label>Rooms: <input name="rooms" type="number" /></label>
+      <label>Year Built: <input name="yearBuilt" /></label>
+      <label>Roof: <input name="roof" /></label>
+      <label>Living Area: <input name="livingArea" /></label>
+      <label>Foundation: <input name="foundation" /></label>
+      <label>Acreage: <input name="acreage" /></label>
+      <label>Garage Spaces: <input name="garageSpaces" type="number" /></label>
+      <label>Virtual Tour: <input name="virtualTour" /></label>
+    </fieldset>
+
+    <fieldset><legend>Location</legend>
+      <label>Town: <input name="town" /></label>
+      <label>County: <input name="county" /></label>
+      <label>State: <input name="state" /></label>
+      <label>Zip: <input name="zip" /></label>
+    </fieldset>
+
+    <fieldset><legend>Finance</legend>
+      <label>Taxes: <input name="taxes" /></label>
+    </fieldset>
+
+    <fieldset><legend>Interior Features</legend>
+      <label>Basement: <input name="basement" /></label>
+      <label>Fireplace: <input type="checkbox" name="fireplace" /></label>
+      <label>Fireplaces Total: <input name="fireplacesTotal" type="number" /></label>
+      <label>Fireplace Features: <input name="fireplaceFeatures" /></label>
+    </fieldset>
+
+    <fieldset><legend>Exterior Features</legend>
+      <label>Parking Spaces: <input name="parkingSpaces" type="number" /></label>
+      <label>Parking Features: <input name="parkingFeatures" /></label>
+    </fieldset>
+
+    <fieldset><legend>Utilities and Appliances</legend>
+      <label>Heat System: <input type="checkbox" name="heatSystem" /></label>
+      <label>Appliances Included: <textarea name="appliances"></textarea></label>
+    </fieldset>
+
+    <fieldset><legend>Schools</legend>
+      <label>Elementary School: <input name="elementary" /></label>
+      <label>Junior High: <input name="junior" /></label>
+      <label>High School: <input name="high" /></label>
+    </fieldset>
+
+    <fieldset><legend>Amenities</legend>
+      <label>Amenities: <textarea name="amenities"></textarea></label>
+    </fieldset>
+
+    <fieldset><legend>Images</legend>
+      <label>Upload Images: <input type="file" name="images[]" multiple /></label>
+    </fieldset>
+
     <button type="submit">Save</button>
   </form>
 
@@ -26,8 +79,9 @@
           const listing = data[index];
           if (listing) {
             document.getElementById('form-title').textContent = 'Edit Listing';
-            form.title.value = listing.title;
-            form.zip.value = listing.zip;
+            Object.keys(listing).forEach(key => {
+              if (form[key]) form[key].value = listing[key];
+            });
             form.index.value = index;
           }
         });
