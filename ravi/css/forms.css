@@ -1,0 +1,26 @@
+form {
+    max-width: 600px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form input, form textarea {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    font-size: 1em;
+    width: 100%;
+  }
+  
+  form button[type="submit"] {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.75em 1.5em;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  form button[type="submit"]:hover {
+    background-color: #555;
+  }

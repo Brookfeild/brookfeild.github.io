@@ -1,0 +1,48 @@
+@media (max-width: 768px) {
+    #listings {
+      flex-direction: column;
+      align-items: center;
+    }
+    .listing-card {
+      width: 90%;
+    }
+    .admin-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    #listing-list li {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    #listing-list li button {
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+    #listing-form {
+      height: 500px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .admin-container {
+      padding: 0.5rem;
+    }
+    .admin-header h2 {
+      font-size: 1.2rem;
+    }
+    #add-listing {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .contact-button {
+      width: 100%;
+      padding: 1rem;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+    }
+    .realtor-name {
+      font-size: 1.5rem;
+    }
+  }
