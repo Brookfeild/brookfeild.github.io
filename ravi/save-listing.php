@@ -1,6 +1,6 @@
 <?php
 $repoPath = __DIR__;
-$listingsFile = $repoPath . '/listings.json';
+$listingsFile = $repoPath . '/ravi/listings.json';
 $uploadDir = $repoPath . '/ravi/uploads/';
 
 // Ensure the uploads directory exists and is writable
@@ -82,12 +82,21 @@ if (file_put_contents($listingsFile, json_encode($listings, JSON_PRETTY_PRINT)) 
   exit("Failed to write listings.json");
 }
 
-// Commit and push changes to Git
+// Git commit uploaded images and listings.json
 putenv('HOME=/var/www/.git-home');
 chdir($repoPath);
-exec('git add listings.json uploads');
-exec('git commit -m "New listing added with images"');
-exec('git push origin master');
+
+// Add both listings.json and uploaded files
+exec('git add ravi/listings.json');
+exec('git add ravi/uploads');
+
+// Check if there are changes before committing
+exec('git diff --cached --quiet', $output, $code);
+if ($code !== 0) {
+  // Only commit if there are staged changes
+  exec('git commit -m "New listing added with images"');
+  exec('git push origin master');
+}
 
 // Return success message
 echo "Listing and images saved and pushed.";
