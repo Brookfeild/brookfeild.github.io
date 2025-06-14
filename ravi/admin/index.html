@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="/ravi/css/base.css" />
-  <link rel="stylesheet" href="/ravi/css/header.css" />
-  <link rel="stylesheet" href="/ravi/css/admin.css" />
-  <link rel="stylesheet" href="/ravi/css/responsive.css" />
+  <link rel="stylesheet" href="/ravi/css/base.css">
+  <link rel="stylesheet" href="/ravi/css/header.css">
+  <link rel="stylesheet" href="/ravi/css/admin.css">
+  <link rel="stylesheet" href="/ravi/css/responsive.css">
 </head>
 <body>
   <div id="admin-header"></div>
+
   <main class="admin-container">
     <section class="admin-header">
       <h2>Admin Dashboard</h2>
       <button id="add-listing">Add New Listing</button>
     </section>
-
-    <nav>
-      <ul>
-        <li><a href="/ravi/admin/index.html">Listings</a></li>
-        <li><a href="/ravi/admin/basic-info.html">Basic Info</a></li>
-        <li><a href="/ravi/admin/profile.html">Profile</a></li>
-        <li><a href="/ravi/admin/logout.html">Logout</a></li>
-      </ul>
-    </nav>
 
     <ul id="listing-list"></ul>
 
@@ -42,13 +33,19 @@
     </section>
   </main>
 
-  <script src="/ravi/js/include-header.js"></script>
   <script>
     if (!sessionStorage.getItem('loggedIn')) {
       window.location.href = '/ravi/admin/login.html';
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Load header partial
+      fetch('/ravi/partials/admin-header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('admin-header').innerHTML = html;
+        });
+
       fetch('/ravi/settings.json')
         .then(res => res.json())
         .then(data => {
