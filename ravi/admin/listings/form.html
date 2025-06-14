@@ -90,8 +90,46 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
       const formData = new FormData(form);
-      const url = form.index.value >= 0 ? '../../update-listing.php' : '../../save-listing.php';
-      fetch(url, { method: 'POST', body: formData })
+      const newListing = {
+        title: formData.get('title'),
+        mlspin: formData.get('mlspin'),
+        rooms: formData.get('rooms'),
+        yearBuilt: formData.get('yearBuilt'),
+        roof: formData.get('roof'),
+        livingArea: formData.get('livingArea'),
+        foundation: formData.get('foundation'),
+        acreage: formData.get('acreage'),
+        garageSpaces: formData.get('garageSpaces'),
+        virtualTour: formData.get('virtualTour'),
+
+        town: formData.get('town'),
+        county: formData.get('county'),
+        state: formData.get('state'),
+        zip: formData.get('zip'),
+
+        taxes: formData.get('taxes'),
+        basement: formData.get('basement'),
+        fireplace: formData.get('fireplace') === 'on',
+        fireplacesTotal: formData.get('fireplacesTotal'),
+        fireplaceFeatures: formData.get('fireplaceFeatures'),
+
+        parkingSpaces: formData.get('parkingSpaces'),
+        parkingFeatures: formData.get('parkingFeatures'),
+        heatSystem: formData.get('heatSystem') === 'on',
+        appliances: formData.get('appliances'),
+
+        elementary: formData.get('elementary'),
+        junior: formData.get('junior'),
+        high: formData.get('high'),
+
+        amenities: formData.get('amenities')
+      };
+
+      fetch('../../save-listing.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newListing)
+      })
         .then(res => res.text())
         .then(alert);
     });
