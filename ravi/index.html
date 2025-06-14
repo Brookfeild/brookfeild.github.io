@@ -1,80 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DreamHomes Realty</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Circle Real Estate</title>
+  <link rel="stylesheet" href="css/style.css"/>
   <script src="js/main.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="site-logo">DreamHomes Realty</h1>
-      <nav class="site-nav">
-        <ul>
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="listings.html">Listings</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="admin/login.html">Admin</a></li>
-        </ul>
-      </nav>
-    </div>
+  <header>
+    <h1>Welcome to Circle Real Estate</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="listings.html">Listings</a>
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About</a>
+      <a href="admin/login.html">Admin</a>
+    </nav>
   </header>
 
-  <section class="hero-section">
-    <div class="hero-content">
-      <h2>Find Your Dream Home</h2>
-      <p>Search from hundreds of listings to find the perfect place to call home.</p>
-      <a href="listings.html" class="btn-primary">Browse Listings</a>
-    </div>
-  </section>
+  <main>
+    <section class="hero">
+      <h2>Find your next home</h2>
+      <p>Browse our current listings or reach out to learn more!</p>
+    </section>
 
-  <section class="featured-listings">
-    <div class="container">
-      <h3>Featured Properties</h3>
-      <div class="listings-grid">
-        <div class="property-card">
-          <img src="images/house1.jpg" alt="Modern House">
-          <div class="property-info">
-            <h4>Modern 3BR Home</h4>
-            <p>$350,000 · Shrewsbury</p>
-          </div>
-        </div>
-        <div class="property-card">
-          <img src="images/house2.jpg" alt="Downtown Apartment">
-          <div class="property-info">
-            <h4>Downtown Apartment</h4>
-            <p>$270,000 · City Center</p>
-          </div>
-        </div>
-        <!-- More properties here -->
-      </div>
-    </div>
-  </section>
-
-  <!-- New sections added below -->
-  <section class="contact-info">
-    <div class="container">
+    <section class="contact-info">
       <h3>Contact</h3>
       <p><strong>Phone:</strong> <span id="public-phone">Loading...</span></p>
-    </div>
-  </section>
+    </section>
 
-  <section class="hours">
-    <div class="container">
+    <section class="hours">
       <h3>Hours of Operation</h3>
       <ul id="business-hours">
         <li>Loading...</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2025 DreamHomes Realty · <a href="sitemap.xml">Sitemap</a></p>
-    </div>
-  </footer>
+  <script src="js/main.js"></script>
 </body>
 </html>

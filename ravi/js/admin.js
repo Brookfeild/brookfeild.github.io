@@ -1,9 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  if (!sessionStorage.getItem('admin-auth')) {
-    window.location.href = 'login.html';
-    return;
-  }
-
   const form = document.getElementById('admin-form');
   const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 

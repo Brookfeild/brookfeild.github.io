@@ -40,5 +40,6 @@ exec('git add listings.json uploads');
 exec('git commit -m "New listing added with images"');
 exec('git push origin master');
 
+// Return success message
 echo "Listing and images saved and pushed.";
 ?>
