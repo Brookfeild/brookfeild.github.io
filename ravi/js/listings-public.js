@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('listings');
 
-  fetch('/ravi/listings.json')
+  fetch('/ravi/listings.json') // Updated path
     .then(res => {
       if (!res.ok) throw new Error("Failed to fetch listings.json");
       return res.json();
