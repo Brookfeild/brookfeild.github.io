@@ -1,27 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
   const listingsContainer = document.getElementById('listings-container');
   const addBtn = document.getElementById('add-listing');
-  const listings = [];
 
-  function renderListings() {
+  function renderListings(listings) {
     listingsContainer.innerHTML = '';
     listings.forEach(listing => {
       const div = document.createElement('div');
       div.className = 'listing';
-      const imageHTML = listing.photos.length ? `<img src="${listing.photos[0]}" alt="Property Photo" style="width:100px; height:auto;">` : '';
-      div.innerHTML = `
-        ${imageHTML}
-        <strong>${listing.basic.title}</strong>
-        <p>${listing.basic.address}</p>
-        <p>${listing.location.zip}</p>
-      `;
+      div.innerHTML = `<strong>${listing.basic.title}</strong><p>${listing.basic.address}</p><p>${listing.location.zip}</p>`;
       listingsContainer.appendChild(div);
     });
   }
 
+  function loadListings() {
+    fetch('../../listings.json')
+      .then(res => res.json())
+      .then(data => renderListings(data));
+  }
+
   function showAddListingForm() {
     const form = document.createElement('form');
-    form.enctype = 'multipart/form-data';
     form.innerHTML = `
       <h3>Add New Listing</h3>
       <fieldset><legend>Basic Information</legend>
@@ -74,24 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <label>Amenities: <textarea name="amenities"></textarea></label>
       </fieldset>
 
-      <fieldset><legend>Photos</legend>
-        <label>Upload Images: <input type="file" name="photos" accept="image/*" multiple></label>
-      </fieldset>
-
       <button type="submit">Save Listing</button>
     `;
 
     form.addEventListener('submit', e => {
       e.preventDefault();
       const fd = new FormData(form);
-
-      const photos = [];
-      const photoFiles = fd.getAll('photos');
-      photoFiles.forEach(file => {
-        const url = URL.createObjectURL(file);
-        photos.push(url);
-      });
-
       const newListing = {
         basic: {
           title: fd.get('title'),
@@ -133,21 +119,26 @@ document.addEventListener('DOMContentLoaded', () => {
           junior: fd.get('junior'),
           high: fd.get('high')
         },
-        amenities: fd.get('amenities'),
-        photos: photos
+        amenities: fd.get('amenities')
       };
 
-      listings.push(newListing);
-      renderListings();
-      form.remove();
+      fetch('../../save-listing.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newListing)
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        loadListings();
+        form.remove();
+      });
     });
 
     listingsContainer.insertAdjacentElement('beforebegin', form);
   }
 
-  addBtn.addEventListener('click', () => {
-    showAddListingForm();
-  });
+  addBtn.addEventListener('click', showAddListingForm);
 
-  renderListings();
+  loadListings();
 });
