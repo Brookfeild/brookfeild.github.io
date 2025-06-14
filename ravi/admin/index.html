@@ -21,6 +21,7 @@
       <ul>
         <li><a href="/ravi/admin/index.html">Listings</a></li>
         <li><a href="/ravi/admin/basic-info.html">Basic Info</a></li>
+        <li><a href="/ravi/admin/profile.html">Profile</a></li>
         <li><a href="/ravi/admin/logout.html">Logout</a></li>
       </ul>
     </nav>
@@ -28,14 +29,43 @@
     <ul id="listing-list"></ul>
 
     <iframe id="listing-form" name="listing-form" src="" style="display: none;"></iframe>
+
+    <section id="basic-info"></section>
+    <section id="profile-info" style="display:none">
+      <h3>User Profile</h3>
+      <form id="profile-form">
+        <label>Profile Picture:<br><input type="file" name="profilePicture" /></label><br>
+        <label>Name:<br><input type="text" name="name" /></label><br>
+        <label>About Me:<br><textarea name="about"></textarea></label><br>
+        <button type="submit">Save Profile</button>
+      </form>
+    </section>
   </main>
 
   <script src="/ravi/js/include-header.js"></script>
   <script>
-    // Login check
     if (!sessionStorage.getItem('loggedIn')) {
       window.location.href = '/ravi/admin/login.html';
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/ravi/settings.json')
+        .then(res => res.json())
+        .then(data => {
+          const basicSection = document.getElementById('basic-info');
+          basicSection.innerHTML = `
+            <h3>Business Info</h3>
+            <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
+            <p><strong>Hours:</strong> ${data.hours || 'N/A'}</p>
+          `;
+        });
+    });
+
+    document.getElementById('add-listing').addEventListener('click', () => {
+      const iframe = document.getElementById('listing-form');
+      iframe.src = '/ravi/admin/listings/form.html';
+      iframe.style.display = 'block';
+    });
   </script>
   <script src="/ravi/js/listings-admin.js"></script>
 </body>
