@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Login</title>
-  <link rel="stylesheet" href="/ravi/css/base.css">
-  <link rel="stylesheet" href="/ravi/css/forms.css">
-  <link rel="stylesheet" href="/ravi/css/responsive.css">
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const user = this.username.value;
-        const pass = this.password.value;
-
-        // Simulated credential check (should be done server-side securely)
-        if (user === 'admin' && pass === 'securepassword') {
-          sessionStorage.setItem('admin-auth', 'true');
-          window.location.href = 'index.html';
-        } else if (user === 'tyler' && pass === 'tyler') {
-          sessionStorage.setItem('admin-auth', 'true');
-          window.location.href = 'index.html';
-        } else {
-          alert('Invalid credentials.');
-        }
-      });
-    });
-  </script>
+  <link rel="stylesheet" href="/ravi/css/base.css" />
+  <link rel="stylesheet" href="/ravi/css/header.css" />
+  <link rel="stylesheet" href="/ravi/css/forms.css" />
+  <link rel="stylesheet" href="/ravi/css/responsive.css" />
 </head>
 <body>
+  <div id="header"></div>
   <main>
-    <h2>Admin Login</h2>
-    <form id="login-form">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
+    <section class="admin-container">
+      <h2>Admin Login</h2>
+      <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
 
-      <button type="submit">Log In</button>
-    </form>
+        <button type="submit">Login</button>
+      </form>
+    </section>
   </main>
+
+  <script src="/ravi/js/include-header.js"></script>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if (user === 'admin' && pass === 'password') {
+        window.location.href = '/ravi/admin/index.html';
+      } else {
+        alert('Invalid credentials');
+      }
+    });
+  </script>
 </body>
 </html>
