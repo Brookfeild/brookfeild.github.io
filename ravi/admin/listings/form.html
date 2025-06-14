@@ -105,8 +105,8 @@
       }
 
       const action = form.index.value >= 0
-      ? 'https://ravi.circle.band/ravi/update-listing.php'
-      : 'https://ravi.circle.band/ravi/save-listing.php';
+        ? '/update-listing.php'
+        : '/save-listing.php';
 
       fetch(action, {
         method: 'POST',
