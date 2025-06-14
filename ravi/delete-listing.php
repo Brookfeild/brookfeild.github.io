@@ -1,31 +1,33 @@
 <?php
 $repoPath = __DIR__;
-$listingsFile = $repoPath . '/ravi/listings.json';
+$listingsFile = $repoPath . '/listings.json';
 
+// Get raw JSON input
 $data = json_decode(file_get_contents('php://input'), true);
-$index = $data['index'] ?? -1;
 
-if (!file_exists($listingsFile) || $index < 0) {
-  http_response_code(400);
-  exit('Invalid listing index.');
+if (!isset($data['index']) || !is_numeric($data['index'])) {
+    http_response_code(400);
+    exit('Invalid index');
 }
 
-$listings = json_decode(file_get_contents($listingsFile), true);
+$index = (int) $data['index'];
+
+// Load existing listings
+$listings = file_exists($listingsFile) ? json_decode(file_get_contents($listingsFile), true) : [];
+
 if (!isset($listings[$index])) {
-  http_response_code(404);
-  exit('Listing not found.');
+    http_response_code(404);
+    exit('Listing not found');
 }
 
-unset($listings[$index]);
-$listings = array_values($listings);
-file_put_contents($listingsFile, json_encode($listings, JSON_PRETTY_PRINT));
+// Remove the listing
+array_splice($listings, $index, 1);
 
-// Optional: Git commit the change
-putenv('HOME=/var/www/.git-home');
-chdir($repoPath);
-exec('git add ravi/listings.json');
-exec('git commit -m "Deleted listing index ' . $index . '"');
-exec('git push origin master');
+// Save updated listings
+if (file_put_contents($listingsFile, json_encode($listings, JSON_PRETTY_PRINT)) === false) {
+    http_response_code(500);
+    exit('Failed to save listings');
+}
 
-echo "Listing deleted.";
+echo 'Listing deleted successfully';
 ?>

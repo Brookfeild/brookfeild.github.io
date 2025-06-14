@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         li.appendChild(btn);
 
-        // NEW: Delete button
+        // Delete button
         const del = document.createElement('button');
         del.textContent = 'Delete';
         del.style.marginLeft = '10px';
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch('/ravi/delete-listing.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ index: i })
+              body: JSON.stringify({ index: parseInt(i, 10) }) // Fixed here
             })
             .then(res => res.text())
             .then(msg => {
